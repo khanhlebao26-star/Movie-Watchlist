@@ -1,7 +1,12 @@
+import { config } from 'dotenv';
 import express from "express";
+import { connectDB, disconnectDB } from './config/db.js';
 
 // Import Routes
 import movieRoutes from './routes/movieRoutes.js';
+
+config();
+connectDB();
 
 const app = express();
 
@@ -13,10 +18,30 @@ app.listen(PORT, () => {
     console.log(`Server running on PORT ${PORT}`);
 });
 
-// GET, POST, PUT, DELETE
-// http://localhost:5001/
+// Handle unhandled promise rejecctions (e.g., database connection errors)
+process.on("unhandledRejection", (err => {
+    console.log("Unhandled Rejection:", err);
+    Server.close(async () => {
+        await disconnectDB();
+        process.exit(1);
+    });
+}));
 
-// AUTH: signin, signup
-// MOVIE: GETTING ALL MOVIES
-// USER: Profile
-// WATCHLIST
+// Handle uncaught exceptions
+process.on("uncaughtException", (err => {
+    console.log("Uncaught Exceptions:", err);
+    Server.close(async () => {
+        await disconnectDB();
+        process.exit(1);
+    });
+}));
+
+// Graceful shutdown
+process.on("SIGTERM", (err => {
+    console.log("SIGTERM received, shutting down gracefully");
+    Server.close(async () => {
+        await disconnectDB();
+        process.exit(0);
+    });
+}));
+
