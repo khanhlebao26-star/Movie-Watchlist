@@ -1,10 +1,12 @@
-const express = require('express');
+import express from "express";
+
+// Import Routes
+import movieRoutes from './routes/movieRoutes.js';
 
 const app = express();
 
-app.get('/hello', (req, res) => {
-    res.json({message: "Hello World"});
-});
+// API Routes
+app.use("/movies", movieRoutes);
 
 const PORT = 5001;
 app.listen(PORT, () => {
@@ -12,4 +14,9 @@ app.listen(PORT, () => {
 });
 
 // GET, POST, PUT, DELETE
-// http://localhost:/5001/hello
+// http://localhost:5001/
+
+// AUTH: signin, signup
+// MOVIE: GETTING ALL MOVIES
+// USER: Profile
+// WATCHLIST
