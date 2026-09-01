@@ -9,13 +9,23 @@ import watchlistRoutes from "./routes/watchlistRoutes.js";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
+import cookieParser from "cookie-parser";
+import cors from "cors";
+
 config();
 
 const app = express();
 
+// CORS
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
+
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // API Routes
 app.use("/movies", movieRoutes);
@@ -30,37 +40,59 @@ app.use(errorHandler);
 
 const PORT = 5001;
 
-const server = app.listen(PORT, async () => {
-    await connectDB();
-    console.log(`Server running on PORT ${PORT}`);
-});
+let server;
+
+const startServer = async () => {
+    try {
+        await connectDB();
+
+        server = app.listen(PORT, () => {
+            console.log(`Server running on PORT ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
 
 // Handle unhandled promise rejection
 process.on("unhandledRejection", (err) => {
     console.error("Unhandled Rejection:", err);
 
-    server.close(async () => {
-        await disconnectDB();
+    if (server) {
+        server.close(async () => {
+            await disconnectDB();
+            process.exit(1);
+        });
+    } else {
         process.exit(1);
-    });
+    }
 });
 
 // Handle uncaught exception
 process.on("uncaughtException", (err) => {
     console.error("Uncaught Exception:", err);
 
-    server.close(async () => {
-        await disconnectDB();
+    if (server) {
+        server.close(async () => {
+            await disconnectDB();
+            process.exit(1);
+        });
+    } else {
         process.exit(1);
-    });
+    }
 });
 
 // Graceful shutdown
 process.on("SIGTERM", () => {
     console.log("SIGTERM received, shutting down gracefully");
 
-    server.close(async () => {
-        await disconnectDB();
-        process.exit(0);
-    });
+    if (server) {
+        server.close(async () => {
+            await disconnectDB();
+            process.exit(0);
+        });
+    }
 });
