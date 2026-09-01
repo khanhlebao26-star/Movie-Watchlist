@@ -7,12 +7,15 @@ import { prisma } from "../config/db.js";
 export const authMiddleware = async (req, res, next) => {
     let token;
     
-    if (
-        req.headers.authorization && 
-        req.headers.authorization.startsWith("Bearer")
-    ) {
-        token = req.headers.authorization.split(" ")[1]; 
-    } else if (req.cookies?.jwt) {
+    // Check Authorization header
+    const authHeader = req.headers.authorization || "";
+
+    if (authHeader.toLowerCase().startsWith("bearer ")) {
+        token = authHeader.split(" ")[1];
+    }
+
+    // If no Bearer token, check cookie
+    if (!token && req.cookies?.jwt) {
         token = req.cookies.jwt;
     }
 
@@ -21,9 +24,14 @@ export const authMiddleware = async (req, res, next) => {
     }
 
     try {
+        if (!process.env.JWT_SECRET) {
+            throw new Error("JWT_SECRET is missing");
+        }
+
         // Verify token and extract the user id
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
+        // Find user
         const user = await prisma.user.findUnique({
             where: {id: decoded.id},
         });
@@ -35,7 +43,20 @@ export const authMiddleware = async (req, res, next) => {
         req.user = user;
         next();
     } catch (err) {
-        return res.status(401).json({error: "Not authorized, token failed"});
+        if (err.name === "TokenExpiredError") {
+            return res.status(401).json({
+                status: "error",
+                message: "Token has expired",
+            });
+        }
 
+        if (err.name === "JsonWebTokenError") {
+            return res.status(401).json({
+                status: "error",
+                message: "Invalid token",
+            });
+        }
+
+        next(err);
     }
 }
