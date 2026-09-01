@@ -4,6 +4,7 @@ import {
     removeFromWatchlist,
     updateWatchlistItem
 } from '../controllers/watchlistController.js';
+
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import { addToWatchlistSchema, updateWatchlistItemSchema } from "../validators/watchlistValidators.js";
