@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
  * 404 Not Found handler
  * Creates an error for routes that don't exist
  */
-const notFount = (req, res, next) => {
+const notFound = (req, res, next) => {
     const error = new Error(`Route ${req.originalUrl} not found`);
     error.statusCode = 404;
     next(error);
@@ -22,7 +22,7 @@ const errorHandler = (err, req, res, next) => {
     // Handle Prisma validation errors
     if (err instanceof Prisma.PrismaClientValidationError) {
         err.statusCode = 400;
-        err.message - "Invalid data provided";
+        err.message = "Invalid data provided";
     }
 
     // Handle Prisma unique constraint violations
@@ -56,4 +56,4 @@ const errorHandler = (err, req, res, next) => {
     });
 };
 
-export { errorHandler, notFount };
+export { errorHandler, notFound };

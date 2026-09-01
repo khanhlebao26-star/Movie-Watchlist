@@ -13,7 +13,7 @@ const createMovieSchema = z.object({
         .max(new Date().getFullYear() + 10, "Release year must be a valid year"),
     overview: z.string().trim().optional(),
     genres: z
-        .arrat(z.string(), { message: "All genres must be strings"})
+        .array(z.string(), { message: "All genres must be strings"})
         .optional(),
     runtime: z.coerce
         .number()
@@ -37,7 +37,7 @@ const updateMovieSchema = z.object({
         .optional(),
     overview: z.string().trim().optional(),
     genres: z
-        .arrat(z.string(), { message: "All genres must be strings"})
+        .array(z.string(), { message: "All genres must be strings"})
         .optional(),
     runtime: z.coerce
         .number()

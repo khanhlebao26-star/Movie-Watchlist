@@ -1,21 +1,25 @@
 import express from "express";
 
-const router = express.Router()
+import {
+    createMovie,
+    deleteMovie,
+    getMovieById,
+    getMovies,
+    updateMovie,
+} from "../controllers/movieController.js";
 
-router.get("/", (req, res) => {
-    res.json({httpMethod: "get"});
-});
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
-router.post("/", (req, res) => {
-    res.json({httpMethod: "post"});
-});
+const router = express.Router();
 
-router.put("/", (req, res) => {
-    res.json({httpMethod: "put"});
-});
+router.get("/", getMovies);
 
-router.delete("/", (req, res) => {
-    res.json({httpMethod: "delete"});
-});
+router.get("/:id", getMovieById);
+
+router.post("/", authMiddleware,createMovie);
+
+router.put("/:id", authMiddleware, updateMovie);
+
+router.delete("/:id", authMiddleware, deleteMovie);
 
 export default router;
