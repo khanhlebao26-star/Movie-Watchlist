@@ -112,7 +112,7 @@ const removeFromWatchlist = async (req, res) => {
 
     // Ensure only owner can delete
     if (watchlistItem.userId !== req.user.id) {
-        return res.status(403).json({ error: "Not allowed to update this watchlist item" });
+        return res.status(403).json({ error: "Not allowed to delete this watchlist item" });
     }
 
     await prisma.watchListItem.delete({

@@ -55,12 +55,6 @@ const createMovie = async (req, res) => {
         },
     });
 
-    if (movie.createdBy !== req.user.id) {
-    return res.status(403).json({
-        error: "Not allowed to modify this movie"
-        });
-    }
-
     res.status(201).json({
         status: "success",
         data: {
@@ -91,6 +85,12 @@ const updateMovie = async (req, res) => {
             error: "Movie not found",
         });
     }
+
+    if (movie.createdBy !== req.user.id) {
+    return res.status(403).json({
+        error: "Not allowed to modify this movie",
+    });
+}
 
     const updatedMovie = await prisma.movie.update({
         where: {
