@@ -55,6 +55,12 @@ const createMovie = async (req, res) => {
         },
     });
 
+    if (movie.createdBy !== req.user.id) {
+    return res.status(403).json({
+        error: "Not allowed to modify this movie"
+        });
+    }
+
     res.status(201).json({
         status: "success",
         data: {
@@ -119,6 +125,13 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({
             error: "Movie not found",
+        });
+    }
+
+    // 2. Check if the user is an owner
+    if (movie.createdBy !== req.user.id) {
+        return res.status(403).json({
+            error: "Not allowed to modify this movie",
         });
     }
 
