@@ -28,12 +28,12 @@ export const authApi = {
 
     register: async (payload) => {
         const res = await api.post("/auth/register", payload);
-        return res.data;
+        return res.data.data;
     },
 
     login: async (payload) => {
         const res = await api.post("/auth/login", payload);
-        return res.data;
+        return res.data.data;
     },
 
     logout: async () => {
@@ -43,7 +43,7 @@ export const authApi = {
 
     me: async () => {
         const res = await api.get("/auth/me");
-        return res.data;
+        return res.data.data;
     },
 };
 
@@ -54,19 +54,19 @@ export const movieApi = {
             params,
         });
 
-        return res.data;
+        return res.data.data;
     },
 
     getMovieById: async (id) => {
         const res = await api.get(`/movies/${id}`);
 
-        return res.data;
+        return res.data.data;
     },
 
     createMovie: async (payload) => {
         const res = await api.post("/movies", payload);
 
-        return res.data;
+        return res.data.data;
     },
 
     updateMovie: async (id, payload) => {
@@ -75,7 +75,7 @@ export const movieApi = {
             payload
         );
 
-        return res.data;
+        return res.data.data;
     },
 
     deleteMovie: async (id) => {
@@ -92,7 +92,7 @@ export const watchlistApi = {
     getWatchlist: async () => {
         const res = await api.get("/watchlist");
 
-        return res.data;
+        return res.data.data;
     },
 
     addToWatchlist: async (payload) => {
@@ -101,7 +101,7 @@ export const watchlistApi = {
             payload
         );
 
-        return res.data;
+        return res.data.data;
     },
 
     updateWatchlistItem: async (id, payload) => {
@@ -110,7 +110,7 @@ export const watchlistApi = {
             payload
         );
 
-        return res.data;
+        return res.data.data;
     },
 
     removeFromWatchlist: async (id) => {
