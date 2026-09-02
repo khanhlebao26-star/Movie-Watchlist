@@ -72,7 +72,7 @@ export default function MovieDetail() {
                 {adding ? "Adding..." : "Add to watchlist"}
                 </button>
 
-                {user && (
+                {user && movie.createdBy === user.id && (
                 <Link to={`/movies/${id}/edit`}>
                     <button type="button">Edit movie</button>
                 </Link>
