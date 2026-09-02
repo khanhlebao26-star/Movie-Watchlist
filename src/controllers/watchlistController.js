@@ -12,7 +12,8 @@ const addToWatchList = async (req, res) => {
 
     if (!movie) {
         return res.status(404).json({
-            error: "Movie not found",
+            status: "error",
+            message: "Movie not found",
         });
     }
 
@@ -28,7 +29,8 @@ const addToWatchList = async (req, res) => {
 
     if (existingInWatchList) {
         return res.status(400).json({
-            error: "Movie already in the watchlist",
+            status: "error",
+            message: "Movie already in the watchlist",
         });
     }
 
@@ -66,12 +68,18 @@ const updateWatchlistItem = async (req, res) => {
     });
 
     if (!watchlistItem) {
-        return res.status(404).json({ error: "Watchlist item not found" });
+        return res.status(404).json({
+            status: "error",
+            message: "Watchlist item not found",
+        });
     }
 
     // Ensure only owner can update
     if (watchlistItem.userId !== req.user.id) {
-        return res.status(403).json({ error: "Not allowed to update this watchlist item" });
+        return res.status(403).json({
+            status: "error",
+            message: "Not allowed to update this watchlist item",
+        });
     }
 
     // Build update data
@@ -107,19 +115,28 @@ const removeFromWatchlist = async (req, res) => {
     });
 
     if (!watchlistItem) {
-        return res.status(404).json({ error: "Watchlist item not found" });
+        return res.status(404).json({
+            status: "error",
+            message: "Watchlist item not found",
+        });
     }
 
     // Ensure only owner can delete
     if (watchlistItem.userId !== req.user.id) {
-        return res.status(403).json({ error: "Not allowed to delete this watchlist item" });
+        return res.status(403).json({
+            status: "error",
+            message: "Not allowed to delete this watchlist item",
+        });
     }
 
     await prisma.watchListItem.delete({
         where: { id: req.params.id },
     });
 
-    res.status(200).json({ status: "success", message: "Movie removed from watchlist", });
+    res.status(200).json({
+        status: "success",
+        message: "Movie removed from watchlist",
+    });
 };
 
 export { addToWatchList, removeFromWatchlist, updateWatchlistItem };

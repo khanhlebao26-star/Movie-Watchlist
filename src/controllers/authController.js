@@ -13,7 +13,10 @@ const register = async (req, res) => {
     if (userExists) {
         return res
         .status(400)
-        .json({error: "User already exists with this email"});
+        .json({
+            status: "error",
+            message: "User already exists with this email"
+        });
     }
 
     // Hash Password
@@ -56,7 +59,10 @@ const login = async (req, res) => {
     if (!user) {
         return res
         .status(401)
-        .json({error: "Invalid email or password"});
+        .json({
+            status: "error",
+            message: "Invalid email or password"
+        });
     }
 
     // Verify password
@@ -65,7 +71,10 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
         return res
         .status(401)
-        .json({error: "Invalid email or password"});
+        .json({
+            status: "error",
+            message: "Invalid email or password"
+        });
     }
 
     // Generate JWT token  
