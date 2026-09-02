@@ -2,24 +2,92 @@ import { Link } from "react-router-dom";
 
 export default function MovieCard({ movie }) {
     return (
-        <article style={{ border: "1px solid #ddd", padding: 16, borderRadius: 10, background: "#fff" }}>
-        <Link to={`/movies/${movie.id}`}>
-            <img
-            src={movie.posterUrl || "https://placehold.co/300x450?text=Movie"}
-            alt={movie.title}
-            style={{ width: "100%", height: 240, objectFit: "cover", borderRadius: 8 }}
-            />
-        </Link>
+        <article className="movie-card">
 
-        <h3 style={{ margin: "12px 0 8px" }}>
-            <Link to={`/movies/${movie.id}`} style={{ color: "#111827", textDecoration: "none" }}>
-            {movie.title}
+            {/* Poster */}
+            <Link
+                to={`/movies/${movie.id}`}
+                className="movie-card-poster-link"
+            >
+                <div className="movie-card-poster-wrapper">
+
+                    <img
+                        src={
+                            movie.posterUrl ||
+                            "https://placehold.co/300x450?text=Movie"
+                        }
+                        alt={movie.title}
+                        className="movie-card-poster"
+                    />
+
+                    {/* Hover overlay */}
+                    <div className="movie-card-overlay">
+                        <span className="movie-card-view">
+                            View Details
+                        </span>
+                    </div>
+
+                </div>
             </Link>
-        </h3>
 
-        <p style={{ margin: 0 }}>{movie.releaseYear}</p>
-        <p style={{ margin: "4px 0" }}>{movie.genres?.join(", ") || "General"}</p>
-        <p style={{ margin: 0 }}>{movie.overview?.slice(0, 80) || "No overview yet."}</p>
+
+            {/* Movie information */}
+            <div className="movie-card-content">
+
+                <Link
+                    to={`/movies/${movie.id}`}
+                    className="movie-card-title"
+                    title={movie.title}
+                >
+                    {movie.title}
+                </Link>
+
+
+                <div className="movie-card-meta">
+
+                    <span>
+                        {movie.releaseYear}
+                    </span>
+
+                    {movie.runtime && (
+                        <>
+                            <span className="movie-card-dot">
+                                •
+                            </span>
+
+                            <span>
+                                {movie.runtime} min
+                            </span>
+                        </>
+                    )}
+
+                </div>
+
+
+                {/* Genres */}
+                {movie.genres?.length > 0 && (
+                    <div className="movie-card-genres">
+                        {movie.genres.slice(0, 3).map((genre) => (
+                            <span
+                                key={genre}
+                                className="movie-card-genre"
+                            >
+                                {genre}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
+
+                {/* Overview */}
+                {movie.overview && (
+                    <p className="movie-card-overview">
+                        {movie.overview}
+                    </p>
+                )}
+
+            </div>
+
         </article>
     );
 }
