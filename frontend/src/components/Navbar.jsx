@@ -17,7 +17,7 @@ export default function Navbar() {
             <div className="navbar-inner">
 
                 {/* Logo */}
-                <Link to="/movies" className="logo">
+                <Link to="/" className="logo">
                     Movie<span className="logo-accent">List</span>
                 </Link>
 
