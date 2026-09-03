@@ -330,3 +330,27 @@
         width: 100%;
     }
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.pagination span {
+    min-width: 110px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        gap: 10px;
+    }
+
+    .pagination .btn {
+        padding: 0 12px;
+    }
+}

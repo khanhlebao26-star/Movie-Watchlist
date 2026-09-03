@@ -213,7 +213,8 @@ export default function CreateMovie() {
             <main className="page">
                 <div className="container">
                     <div className="loading">
-                        Loading movie...
+                        <span className="spinner"></span>
+                        <span>Loading movie...</span>
                     </div>
                 </div>
             </main>
@@ -518,13 +519,11 @@ export default function CreateMovie() {
 
                                 {form.posterUrl ? (
                                     <img
-                                        src={
-                                            form.posterUrl
-                                        }
+                                        src={form.posterUrl}
                                         alt="Movie poster preview"
                                         onError={(e) => {
-                                            e.currentTarget.style.display =
-                                                "none";
+                                            e.currentTarget.src =
+                                                "https://placehold.co/400x600?text=Invalid+Poster";
                                         }}
                                     />
                                 ) : (
