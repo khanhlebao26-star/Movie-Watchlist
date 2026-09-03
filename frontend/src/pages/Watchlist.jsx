@@ -18,27 +18,38 @@ export default function Watchlist() {
        FETCH WATCHLIST
     ===================================================== */
 
-    const fetchWatchlist = async () => {
+    useEffect(() => {
+    let ignore = false;
+
+    const loadWatchlist = async () => {
         try {
             setLoading(true);
             setError("");
 
-            const result =
-                await watchlistApi.getWatchlist();
+            const result = await watchlistApi.getWatchlist();
 
-            setWatchlist(result.watchlist || []);
+            if (!ignore) {
+                setWatchlist(result.items  || []);
+            }
         } catch (err) {
-            setError(
-                err.message || "Failed to load watchlist."
-            );
+            if (!ignore) {
+                setError(
+                    err.message || "Failed to load watchlist."
+                );
+            }
         } finally {
-            setLoading(false);
+            if (!ignore) {
+                setLoading(false);
+            }
         }
     };
 
-    useEffect(() => {
-        fetchWatchlist();
-    }, []);
+    loadWatchlist();
+
+    return () => {
+        ignore = true;
+    };
+}, []);
 
     /* =====================================================
        UPDATE WATCHLIST ITEM
@@ -63,9 +74,9 @@ export default function Watchlist() {
                 prev.map((item) =>
                     item.id === id
                         ? {
-                              ...item,
-                              ...updatedItem,
-                          }
+                            ...item,
+                            ...updatedItem,
+                        }
                         : item
                 )
             );
@@ -80,7 +91,7 @@ export default function Watchlist() {
     };
 
     /* =====================================================
-       DELETE WATCHLIST ITEM
+    DELETE WATCHLIST ITEM
     ===================================================== */
 
     const handleRemove = async (id) => {
@@ -120,9 +131,9 @@ export default function Watchlist() {
         filter === "ALL"
             ? watchlist
             : watchlist.filter(
-                  (item) =>
-                      item.status === filter
-              );
+                (item) =>
+                    item.status === filter
+            );
 
     /* =====================================================
        STATS
