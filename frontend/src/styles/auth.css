@@ -1,0 +1,225 @@
+/* =========================================================
+   AUTH
+========================================================= */
+ 
+.auth-page {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(229, 9, 20, 0.08),
+            transparent 35%
+        ),
+        var(--bg);
+}
+ 
+/* Decorative background */
+ 
+.auth-page::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: -180px;
+    left: -180px;
+    border-radius: 50%;
+    background: rgba(229, 9, 20, 0.06);
+    filter: blur(80px);
+    pointer-events: none;
+}
+ 
+.auth-page::after {
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    right: -180px;
+    bottom: -180px;
+    border-radius: 50%;
+    background: rgba(229, 9, 20, 0.05);
+    filter: blur(80px);
+    pointer-events: none;
+}
+ 
+/* Container */
+ 
+.auth-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 430px;
+}
+ 
+/* Logo */
+ 
+.auth-logo {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 28px;
+    color: var(--text);
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+ 
+.auth-logo span {
+    color: var(--primary);
+}
+ 
+.auth-logo:hover {
+    color: var(--text);
+}
+ 
+/* Card */
+ 
+.auth-card {
+    width: 100%;
+    padding: 36px;
+    background: rgba(21, 21, 27, 0.92);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+ 
+/* Header */
+ 
+.auth-header {
+    margin-bottom: 28px;
+}
+ 
+.auth-title {
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
+ 
+.auth-description {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+ 
+/* Error */
+ 
+.auth-error {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    line-height: 1.5;
+}
+ 
+/* Form */
+ 
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+ 
+.auth-form .form-group {
+    margin: 0;
+}
+ 
+.auth-form input {
+    height: 46px;
+    padding: 0 14px;
+}
+ 
+.auth-form input:hover {
+    border-color: #3f3f46;
+}
+ 
+/* Label row */
+ 
+.auth-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+ 
+/* Submit */
+ 
+.auth-submit {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 4px;
+}
+ 
+.auth-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+ 
+/* Footer */
+ 
+.auth-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+ 
+.auth-footer a {
+    color: var(--primary);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+ 
+.auth-footer a:hover {
+    color: var(--primary-hover);
+}
+ 
+/* =========================================================
+   AUTH RESPONSIVE
+========================================================= */
+ 
+@media (max-width: 480px) {
+    .auth-page {
+        min-height: calc(100vh - 64px);
+        padding: 40px 16px;
+    }
+ 
+    .auth-container {
+        max-width: 100%;
+    }
+ 
+    .auth-logo {
+        margin-bottom: 22px;
+        font-size: 24px;
+    }
+ 
+    .auth-card {
+        padding: 28px 22px;
+    }
+ 
+    .auth-title {
+        font-size: 26px;
+    }
+ 
+    .auth-description {
+        font-size: 13px;
+    }
+ 
+    .auth-footer {
+        flex-direction: column;
+        gap: 4px;
+    }
+}

@@ -1,0 +1,297 @@
+/* =========================================================
+   MOVIE FORM
+========================================================= */
+ 
+.movie-form-page {
+    min-height: calc(100vh - 72px);
+    padding: 40px 0 80px;
+    background: var(--bg);
+}
+ 
+/* =========================================================
+   BACK
+========================================================= */
+ 
+.movie-form-back {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 28px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+ 
+.movie-form-back:hover {
+    color: var(--text);
+}
+ 
+/* =========================================================
+   HEADER
+========================================================= */
+ 
+.movie-form-header {
+    margin-bottom: 32px;
+}
+ 
+.movie-form-label {
+    display: inline-flex;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+}
+ 
+/* =========================================================
+   MESSAGES
+========================================================= */
+ 
+.movie-form-message {
+    margin-bottom: 20px;
+}
+ 
+.movie-form-success {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: #86efac;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+}
+ 
+/* =========================================================
+   FORM LAYOUT
+========================================================= */
+ 
+.movie-form-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 24px;
+    align-items: start;
+}
+ 
+/* =========================================================
+   FORM CARD
+========================================================= */
+ 
+.movie-form-card {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+ 
+.movie-form-card-header {
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+ 
+.movie-form-card-header h2 {
+    margin-bottom: 6px;
+    font-size: 19px;
+    font-weight: 600;
+}
+ 
+.movie-form-card-header p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+ 
+/* =========================================================
+   FIELDS
+========================================================= */
+ 
+.movie-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+ 
+.movie-form-fields .form-group {
+    margin: 0;
+}
+ 
+.required {
+    margin-left: 4px;
+    color: var(--primary);
+}
+ 
+.movie-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+ 
+.movie-form-fields input,
+.movie-form-fields textarea {
+    padding: 11px 13px;
+}
+ 
+.movie-form-fields input {
+    height: 46px;
+}
+ 
+.movie-form-fields textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.6;
+}
+ 
+/* =========================================================
+   INPUT SUFFIX
+========================================================= */
+ 
+.input-with-suffix {
+    position: relative;
+}
+ 
+.input-with-suffix input {
+    padding-right: 48px;
+}
+ 
+.input-with-suffix span {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 12px;
+    pointer-events: none;
+}
+ 
+/* =========================================================
+   SIDEBAR
+========================================================= */
+ 
+.movie-form-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 96px;
+}
+ 
+/* =========================================================
+   POSTER PREVIEW
+========================================================= */
+ 
+.movie-poster-preview {
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+ 
+.movie-poster-preview img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+ 
+.movie-poster-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 2 / 3;
+    color: var(--text-muted);
+    background:
+        linear-gradient(
+            135deg,
+            var(--surface),
+            var(--bg-secondary)
+        );
+}
+ 
+.movie-poster-placeholder span {
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+    font-size: 20px;
+    font-weight: 600;
+}
+ 
+.movie-poster-placeholder small {
+    font-size: 12px;
+}
+ 
+/* =========================================================
+   ACTIONS
+========================================================= */
+ 
+.movie-form-actions {
+    display: flex;
+    gap: 10px;
+}
+ 
+.movie-form-actions .btn {
+    flex: 1;
+    min-height: 46px;
+}
+ 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+ 
+@media (max-width: 900px) {
+ 
+    .movie-form-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+ 
+    .movie-form-sidebar {
+        position: static;
+    }
+ 
+    .movie-poster-preview {
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+ 
+@media (max-width: 600px) {
+ 
+    .movie-form-page {
+        padding: 30px 0 60px;
+    }
+ 
+    .movie-form-card {
+        padding: 22px;
+    }
+ 
+    .movie-form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+ 
+    .movie-form-actions {
+        flex-direction: column-reverse;
+    }
+ 
+    .movie-form-actions .btn {
+        width: 100%;
+    }
+}
+ 
+@media (max-width: 480px) {
+ 
+    .movie-form-card {
+        padding: 18px;
+    }
+ 
+    .movie-form-card-header {
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+    }
+ 
+    .movie-form-card-header h2 {
+        font-size: 18px;
+    }
+}
