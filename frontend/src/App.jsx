@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -20,17 +21,15 @@ import Watchlist from "./pages/Watchlist";
 
 import "./App.css";
 
-export default function App() {
+function AppLayout() {
+  const location = useLocation();
+  const isAuthPage = ["/login", "/register"].includes(location.pathname);
+
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <BrowserRouter>
+    <div className="app">
+      {!isAuthPage && <Navbar />}
 
-          <div className="app">
-
-            <Navbar />
-
-            <Routes>
+      <Routes>
 
               <Route
                 path="/login"
@@ -84,11 +83,19 @@ export default function App() {
                 }
               />
 
-            </Routes>
+      </Routes>
 
-            <Footer />
-          </div>
+      {!isAuthPage && <Footer />}
+    </div>
+  );
+}
 
+export default function App() {
+  return (
+    <AuthProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <AppLayout />
         </BrowserRouter>
       </ToastProvider>
     </AuthProvider>
