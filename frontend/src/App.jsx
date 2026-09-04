@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import { AuthProvider } from "./context/AuthProvider";
 
+import Footer from "./components/Footer";
+import { ToastProvider } from "./context/ToastProvider";
 import CreateMovie from "./pages/CreateMovie";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -21,71 +23,74 @@ import "./App.css";
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>
 
-        <div className="app">
+          <div className="app">
 
-          <Navbar />
+            <Navbar />
 
-          <Routes>
+            <Routes>
 
-            <Route
-              path="/login"
-              element={<Login />}
-            />
+              <Route
+                path="/login"
+                element={<Login />}
+              />
 
-            <Route
-              path="/register"
-              element={<Register />}
-            />
+              <Route
+                path="/register"
+                element={<Register />}
+              />
 
-            <Route
-              path="/"
-              element={<Home />}
-            />
+              <Route
+                path="/"
+                element={<Home />}
+              />
 
-            <Route
-              path="/movies"
-              element={<Home />}
-            />
+              <Route
+                path="/movies"
+                element={<Home />}
+              />
 
-            <Route
-              path="/movies/:id"
-              element={<MovieDetail />}
-            />
+              <Route
+                path="/movies/:id"
+                element={<MovieDetail />}
+              />
 
-            <Route
-              path="/watchlist"
-              element={
-                <ProtectedRoute>
-                  <Watchlist />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/watchlist"
+                element={
+                  <ProtectedRoute>
+                    <Watchlist />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/movies/new"
-              element={
-                <ProtectedRoute>
-                  <CreateMovie />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/movies/new"
+                element={
+                  <ProtectedRoute>
+                    <CreateMovie />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/movies/:id/edit"
-              element={
-                <ProtectedRoute>
-                  <CreateMovie />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/movies/:id/edit"
+                element={
+                  <ProtectedRoute>
+                    <CreateMovie />
+                  </ProtectedRoute>
+                }
+              />
 
-          </Routes>
+            </Routes>
 
-        </div>
+            <Footer />
+          </div>
 
-      </BrowserRouter>
+        </BrowserRouter>
+      </ToastProvider>
     </AuthProvider>
   );
 }

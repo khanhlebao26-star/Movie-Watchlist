@@ -158,15 +158,7 @@ export default function Home() {
                             <MovieList movies={movies} />
 
                             {pagination && pagination.pages > 1 && (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: 16,
-                                        marginTop: 32,
-                                    }}
-                                >
+                                <div className="pagination">
                                     <button
                                         type="button"
                                         className="btn btn-secondary"

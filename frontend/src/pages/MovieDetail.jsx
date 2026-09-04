@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useAuth } from "../context/useAuth";
+import { useToast } from "../context/useToast";
 import { movieApi, watchlistApi } from "../services/api";
 
 export default function MovieDetail() {
@@ -14,7 +15,8 @@ export default function MovieDetail() {
     const [error, setError] = useState("");
 
     const [addingToWatchlist, setAddingToWatchlist] = useState(false);
-    const [watchlistMessage, setWatchlistMessage] = useState("");
+    // const [watchlistMessage, setWatchlistMessage] = useState("");
+    const { showToast } = useToast();
 
     const [deleting, setDeleting] = useState(false);
 
@@ -49,19 +51,16 @@ export default function MovieDetail() {
 
         try {
             setAddingToWatchlist(true);
-            setWatchlistMessage("");
-
             await watchlistApi.addToWatchlist({
                 movieId: movie.id,
             });
 
-            setWatchlistMessage(
-                "Movie added to your watchlist."
-            );
+            showToast("Movie added to your watchlist.", "success");
         } catch (err) {
-            setWatchlistMessage(
-                err.message || "Failed to add movie."
-            );
+            showToast(
+            err.message || "Failed to add movie.",
+            "error"
+        );
         } finally {
             setAddingToWatchlist(false);
         }
@@ -97,7 +96,8 @@ export default function MovieDetail() {
             <main className="page">
                 <div className="container">
                     <div className="loading">
-                        Loading movie...
+                        <span className="spinner"></span>
+                        <span>Loading movie...</span>
                     </div>
                 </div>
             </main>
@@ -258,11 +258,11 @@ export default function MovieDetail() {
                         </div>
 
                         {/* WATCHLIST MESSAGE */}
-                        {watchlistMessage && (
+                        {/* {watchlistMessage && (
                             <div className="movie-detail-message">
                                 {watchlistMessage}
                             </div>
-                        )}
+                        )} */}
 
                     </div>
 
