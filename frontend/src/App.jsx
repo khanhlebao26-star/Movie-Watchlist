@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthProvider";
 
 import Footer from "./components/Footer";
-import { ToastProvider } from "./context/ToastContext";
+import { ToastProvider } from "./context/ToastProvider";
 import CreateMovie from "./pages/CreateMovie";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
