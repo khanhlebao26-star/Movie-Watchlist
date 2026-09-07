@@ -2,3 +2,5 @@ node_modules/
 .env
 /src/generated/prisma
 Movie Watchlist/
+backend/videos/
+*.mp4

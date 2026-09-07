@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import MovieDetail from "./pages/MovieDetail";
 import Register from "./pages/Register";
 import Watchlist from "./pages/Watchlist";
+import WatchMovie from "./pages/WatchMovie";
 
 import "./App.css";
 
@@ -54,6 +55,11 @@ function AppLayout() {
               <Route
                 path="/movies/:id"
                 element={<MovieDetail />}
+              />
+
+              <Route
+                  path="/movies/:id/watch"
+                  element={<WatchMovie />}
               />
 
               <Route
