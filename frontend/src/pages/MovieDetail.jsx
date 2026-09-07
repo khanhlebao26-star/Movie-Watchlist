@@ -224,6 +224,14 @@ export default function MovieDetail() {
 
                             <button
                                 type="button"
+                                className="btn btn-play"
+                                onClick={() => navigate(`/movies/${movie.id}/watch`)}
+                            >
+                                ▶ Play Movie
+                            </button>
+
+                            <button
+                                type="button"
                                 className="btn btn-primary movie-detail-watchlist"
                                 onClick={handleAddToWatchlist}
                                 disabled={addingToWatchlist}
