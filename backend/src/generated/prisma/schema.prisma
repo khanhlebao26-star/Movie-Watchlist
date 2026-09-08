@@ -32,6 +32,7 @@ model Movie {
   genres      String[] @default([])
   runtime     Int?
   posterUrl   String?
+  videoPath   String?
   createdBy   String
   createdAt   DateTime @default(now())
 

@@ -136,6 +136,7 @@ exports.Prisma.MovieScalarFieldEnum = {
   genres: 'genres',
   runtime: 'runtime',
   posterUrl: 'posterUrl',
+  videoPath: 'videoPath',
   createdBy: 'createdBy',
   createdAt: 'createdAt'
 };
