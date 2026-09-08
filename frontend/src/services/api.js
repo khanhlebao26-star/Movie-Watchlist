@@ -122,4 +122,10 @@ export const watchlistApi = {
     },
 };
 
+export const videoApi = {
+    getVideoUrl: (filename) => {
+        return `${API_URL}/api/videos/${encodeURIComponent(filename)}`;
+    },
+};
+
 export default api;

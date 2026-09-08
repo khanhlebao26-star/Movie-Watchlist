@@ -1,5 +1,7 @@
-const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5001";
+import { videoApi } from "../services/api";
+
+// const API_URL =
+//     import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export default function VideoPlayer({ filename }) {
     if (!filename) {
@@ -10,7 +12,7 @@ export default function VideoPlayer({ filename }) {
         );
     }
 
-    const videoUrl = `${API_URL}/api/videos/${encodeURIComponent(filename)}`;
+    const videoUrl = videoApi.getVideoUrl(filename);
 
     return (
         <div className="video-player">

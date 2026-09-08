@@ -2297,6 +2297,7 @@ export namespace Prisma {
     releaseYear: number | null
     runtime: number | null
     posterUrl: string | null
+    videoPath: string | null
     createdBy: string | null
     createdAt: Date | null
   }
@@ -2308,6 +2309,7 @@ export namespace Prisma {
     releaseYear: number | null
     runtime: number | null
     posterUrl: string | null
+    videoPath: string | null
     createdBy: string | null
     createdAt: Date | null
   }
@@ -2320,6 +2322,7 @@ export namespace Prisma {
     genres: number
     runtime: number
     posterUrl: number
+    videoPath: number
     createdBy: number
     createdAt: number
     _all: number
@@ -2343,6 +2346,7 @@ export namespace Prisma {
     releaseYear?: true
     runtime?: true
     posterUrl?: true
+    videoPath?: true
     createdBy?: true
     createdAt?: true
   }
@@ -2354,6 +2358,7 @@ export namespace Prisma {
     releaseYear?: true
     runtime?: true
     posterUrl?: true
+    videoPath?: true
     createdBy?: true
     createdAt?: true
   }
@@ -2366,6 +2371,7 @@ export namespace Prisma {
     genres?: true
     runtime?: true
     posterUrl?: true
+    videoPath?: true
     createdBy?: true
     createdAt?: true
     _all?: true
@@ -2465,6 +2471,7 @@ export namespace Prisma {
     genres: string[]
     runtime: number | null
     posterUrl: string | null
+    videoPath: string | null
     createdBy: string
     createdAt: Date
     _count: MovieCountAggregateOutputType | null
@@ -2496,6 +2503,7 @@ export namespace Prisma {
     genres?: boolean
     runtime?: boolean
     posterUrl?: boolean
+    videoPath?: boolean
     createdBy?: boolean
     createdAt?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
@@ -2511,6 +2519,7 @@ export namespace Prisma {
     genres?: boolean
     runtime?: boolean
     posterUrl?: boolean
+    videoPath?: boolean
     createdBy?: boolean
     createdAt?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
@@ -2524,6 +2533,7 @@ export namespace Prisma {
     genres?: boolean
     runtime?: boolean
     posterUrl?: boolean
+    videoPath?: boolean
     createdBy?: boolean
     createdAt?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
@@ -2537,11 +2547,12 @@ export namespace Prisma {
     genres?: boolean
     runtime?: boolean
     posterUrl?: boolean
+    videoPath?: boolean
     createdBy?: boolean
     createdAt?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "overview" | "releaseYear" | "genres" | "runtime" | "posterUrl" | "createdBy" | "createdAt", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "overview" | "releaseYear" | "genres" | "runtime" | "posterUrl" | "videoPath" | "createdBy" | "createdAt", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
     watchListItems?: boolean | Movie$watchListItemsArgs<ExtArgs>
@@ -2568,6 +2579,7 @@ export namespace Prisma {
       genres: string[]
       runtime: number | null
       posterUrl: string | null
+      videoPath: string | null
       createdBy: string
       createdAt: Date
     }, ExtArgs["result"]["movie"]>
@@ -3002,6 +3014,7 @@ export namespace Prisma {
     readonly genres: FieldRef<"Movie", 'String[]'>
     readonly runtime: FieldRef<"Movie", 'Int'>
     readonly posterUrl: FieldRef<"Movie", 'String'>
+    readonly videoPath: FieldRef<"Movie", 'String'>
     readonly createdBy: FieldRef<"Movie", 'String'>
     readonly createdAt: FieldRef<"Movie", 'DateTime'>
   }
@@ -4624,6 +4637,7 @@ export namespace Prisma {
     genres: 'genres',
     runtime: 'runtime',
     posterUrl: 'posterUrl',
+    videoPath: 'videoPath',
     createdBy: 'createdBy',
     createdAt: 'createdAt'
   };
@@ -4816,6 +4830,7 @@ export namespace Prisma {
     genres?: StringNullableListFilter<"Movie">
     runtime?: IntNullableFilter<"Movie"> | number | null
     posterUrl?: StringNullableFilter<"Movie"> | string | null
+    videoPath?: StringNullableFilter<"Movie"> | string | null
     createdBy?: StringFilter<"Movie"> | string
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4830,6 +4845,7 @@ export namespace Prisma {
     genres?: SortOrder
     runtime?: SortOrderInput | SortOrder
     posterUrl?: SortOrderInput | SortOrder
+    videoPath?: SortOrderInput | SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
     creator?: UserOrderByWithRelationInput
@@ -4847,6 +4863,7 @@ export namespace Prisma {
     genres?: StringNullableListFilter<"Movie">
     runtime?: IntNullableFilter<"Movie"> | number | null
     posterUrl?: StringNullableFilter<"Movie"> | string | null
+    videoPath?: StringNullableFilter<"Movie"> | string | null
     createdBy?: StringFilter<"Movie"> | string
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4861,6 +4878,7 @@ export namespace Prisma {
     genres?: SortOrder
     runtime?: SortOrderInput | SortOrder
     posterUrl?: SortOrderInput | SortOrder
+    videoPath?: SortOrderInput | SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
     _count?: MovieCountOrderByAggregateInput
@@ -4881,6 +4899,7 @@ export namespace Prisma {
     genres?: StringNullableListFilter<"Movie">
     runtime?: IntNullableWithAggregatesFilter<"Movie"> | number | null
     posterUrl?: StringNullableWithAggregatesFilter<"Movie"> | string | null
+    videoPath?: StringNullableWithAggregatesFilter<"Movie"> | string | null
     createdBy?: StringWithAggregatesFilter<"Movie"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Movie"> | Date | string
   }
@@ -5033,6 +5052,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdAt?: Date | string
     creator: UserCreateNestedOneWithoutMoviesInput
     watchListItems?: WatchListItemCreateNestedManyWithoutMovieInput
@@ -5046,6 +5066,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdBy: string
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutMovieInput
@@ -5059,6 +5080,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutMoviesNestedInput
     watchListItems?: WatchListItemUpdateManyWithoutMovieNestedInput
@@ -5072,6 +5094,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutMovieNestedInput
@@ -5085,6 +5108,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdBy: string
     createdAt?: Date | string
   }
@@ -5097,6 +5121,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5108,6 +5133,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5352,6 +5378,7 @@ export namespace Prisma {
     genres?: SortOrder
     runtime?: SortOrder
     posterUrl?: SortOrder
+    videoPath?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -5368,6 +5395,7 @@ export namespace Prisma {
     releaseYear?: SortOrder
     runtime?: SortOrder
     posterUrl?: SortOrder
+    videoPath?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -5379,6 +5407,7 @@ export namespace Prisma {
     releaseYear?: SortOrder
     runtime?: SortOrder
     posterUrl?: SortOrder
+    videoPath?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -5903,6 +5932,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdAt?: Date | string
     watchListItems?: WatchListItemCreateNestedManyWithoutMovieInput
   }
@@ -5915,6 +5945,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutMovieInput
   }
@@ -5986,6 +6017,7 @@ export namespace Prisma {
     genres?: StringNullableListFilter<"Movie">
     runtime?: IntNullableFilter<"Movie"> | number | null
     posterUrl?: StringNullableFilter<"Movie"> | string | null
+    videoPath?: StringNullableFilter<"Movie"> | string | null
     createdBy?: StringFilter<"Movie"> | string
     createdAt?: DateTimeFilter<"Movie"> | Date | string
   }
@@ -6149,6 +6181,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdAt?: Date | string
     creator: UserCreateNestedOneWithoutMoviesInput
   }
@@ -6161,6 +6194,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdBy: string
     createdAt?: Date | string
   }
@@ -6218,6 +6252,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutMoviesNestedInput
   }
@@ -6230,6 +6265,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6242,6 +6278,7 @@ export namespace Prisma {
     genres?: MovieCreategenresInput | string[]
     runtime?: number | null
     posterUrl?: string | null
+    videoPath?: string | null
     createdAt?: Date | string
   }
 
@@ -6263,6 +6300,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUpdateManyWithoutMovieNestedInput
   }
@@ -6275,6 +6313,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutMovieNestedInput
   }
@@ -6287,6 +6326,7 @@ export namespace Prisma {
     genres?: MovieUpdategenresInput | string[]
     runtime?: NullableIntFieldUpdateOperationsInput | number | null
     posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
