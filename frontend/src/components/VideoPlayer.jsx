@@ -1,10 +1,9 @@
-import { videoApi } from "../services/api";
 
-// const API_URL =
-//     import.meta.env.VITE_API_URL || "http://localhost:5001";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5001";
 
-export default function VideoPlayer({ filename }) {
-    if (!filename) {
+export default function VideoPlayer({ movieId  }) {
+    if (!movieId ) {
         return (
             <div className="video-player-empty">
                 Video is not available.
@@ -12,7 +11,8 @@ export default function VideoPlayer({ filename }) {
         );
     }
 
-    const videoUrl = videoApi.getVideoUrl(filename);
+    const videoUrl = 
+        `${API_URL}/api/videos/${encodeURIComponent(movieId)}`;
 
     return (
         <div className="video-player">
