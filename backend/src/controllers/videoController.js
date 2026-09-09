@@ -25,7 +25,7 @@ export const streamVideo = async (req, res) => {
         // Movie chưa có video
         if(!movie.videoPath) {
             return res.status(404).json({
-                message: "Video is not avalable for this movie",
+                message: "Video is not available for this movie",
             });
         }
 
