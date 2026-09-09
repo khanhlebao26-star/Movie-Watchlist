@@ -3,6 +3,6 @@ import { streamVideo } from "../controllers/videoController.js";
 
 const router = express.Router();
 
-router.get("/:filename", streamVideo);
+router.get("/:movieId", streamVideo);
 
 export default router;

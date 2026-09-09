@@ -1,16 +1,41 @@
 import "dotenv/config";
+import { prisma } from "../config/db.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const BUCKET_NAME = "movies";
 
 export const streamVideo = async (req, res) => {
     try {
-        const filename = req.params.filename;
+        const movieId = req.params.movieId;
 
-        // URL của video trên Supabase Storage
+        // Tìm movie trong database
+        const movie = await prisma.movie.findUnique({
+            where: {
+                id: movieId,
+            },
+        });
+
+        //Không tìm thấy movie
+        if (!movie) {
+            return res.status(404).json({
+                message: "Movie not found",
+            });
+        }
+
+        // Movie chưa có video
+        if(!movie.videoPath) {
+            return res.status(404).json({
+                message: "Video is not avalable for this movie",
+            });
+        }
+
+        // Lấy filename từ database
+        const filename = movie.videoPath;
+
+        // Tạo URL Supabase Storage
         const videoUrl =
             `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${encodeURIComponent(filename)}`;
-
+        
         // Lấy Range từ Browser
         const range = req.headers.range;
 
@@ -29,7 +54,7 @@ export const streamVideo = async (req, res) => {
         // Video không tồn tại
         if (response.status === 404) {
             return res.status(404).json({
-                message: "Video not found",
+                message: "Video not found in storage",
             });
         }
 
