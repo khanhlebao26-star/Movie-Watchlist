@@ -1,8 +1,10 @@
+import { useState } from "react";
 import {
   BrowserRouter,
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -24,11 +26,49 @@ import "./App.css";
 
 function AppLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
+  const [genre, setGenre] = useState("");
+  const [page, setPage] = useState(1);
+
   const isAuthPage = ["/login", "/register"].includes(location.pathname);
+
+  const handleSearchChange = (value) => {
+    setSearch(value);
+    setPage(1);
+
+    if (location.pathname !== "/" && location.pathname !== "/movies") {
+      navigate("/movies");
+    }
+  };
+
+  const handleGenreChange = (value) => {
+    setGenre(value);
+    setPage(1);
+
+    if (location.pathname !== "/" && location.pathname !== "/movies") {
+      navigate("/movies");
+    }
+  };
+
+  const handleClearFilters = () => {
+    setSearch("");
+    setGenre("");
+    setPage(1);
+  };
 
   return (
     <div className="app">
-      {!isAuthPage && <Navbar />}
+      {!isAuthPage && (
+        <Navbar
+          search={search}
+          genre={genre}
+          onSearchChange={handleSearchChange}
+          onGenreChange={handleGenreChange}
+          onClearFilters={handleClearFilters}
+        />
+      )}
 
       <Routes>
 
@@ -44,13 +84,27 @@ function AppLayout() {
 
               <Route
                 path="/"
-                element={<Home />}
+                element={
+                  <Home
+                      search={search}
+                      genre={genre}
+                      page={page}
+                      setPage={setPage}
+                  />
+                }
               />
 
               <Route
                 path="/movies"
-                element={<Home />}
-              />
+                element={
+                    <Home
+                        search={search}
+                        genre={genre}
+                        page={page}
+                        setPage={setPage}
+                    />
+                }
+            />
 
               <Route
                 path="/movies/:id"
@@ -88,7 +142,6 @@ function AppLayout() {
                   </ProtectedRoute>
                 }
               />
-
       </Routes>
 
       {!isAuthPage && <Footer />}
