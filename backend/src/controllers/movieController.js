@@ -69,7 +69,7 @@ const getMovieById = async (req, res, next) => {
 // POST /movies
 const createMovie = async (req, res, next) => {
     try {
-        const { title, overview, releaseYear, genres, runtime, posterUrl } = req.body;
+        const { title, overview, releaseYear, genres, runtime, posterUrl, videoPath } = req.body;
 
         const movie = await prisma.movie.create({
             data: {
@@ -79,6 +79,7 @@ const createMovie = async (req, res, next) => {
                 genres,
                 runtime,
                 posterUrl,
+                videoPath,
                 createdBy: req.user.id,
             },
         });
@@ -95,7 +96,7 @@ const createMovie = async (req, res, next) => {
 // PUT /movies/:id
 const updateMovie = async (req, res, next) => {
     try {
-        const { title, overview, releaseYear, genres, runtime, posterUrl } = req.body;
+        const { title, overview, releaseYear, genres, runtime, posterUrl, videoPath } = req.body;
 
         const movie = await prisma.movie.findUnique({
             where: { id: req.params.id },
@@ -123,6 +124,8 @@ const updateMovie = async (req, res, next) => {
         if (genres !== undefined) updateData.genres = genres;
         if (runtime !== undefined) updateData.runtime = runtime;
         if (posterUrl !== undefined) updateData.posterUrl = posterUrl;
+        if (videoPath !== undefined) updateData.videoPath = videoPath;
+            
 
         const updatedMovie = await prisma.movie.update({
             where: { id: req.params.id },

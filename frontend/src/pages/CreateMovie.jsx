@@ -20,6 +20,7 @@ export default function CreateMovie() {
         genres: "",
         runtime: "",
         posterUrl: "",
+        videoPath: "",
     });
 
     const [loading, setLoading] = useState(false);
@@ -57,6 +58,7 @@ export default function CreateMovie() {
                     runtime: movie.runtime || "",
                     posterUrl:
                         movie.posterUrl || "",
+                    videoPath: movie.videoPath || "",
                 });
             } catch (err) {
                 setError(
@@ -159,6 +161,9 @@ export default function CreateMovie() {
 
             posterUrl:
                 form.posterUrl.trim() || undefined,
+            
+            videoPath:
+                form.videoPath.trim() || undefined,
         };
 
         try {
@@ -567,6 +572,34 @@ export default function CreateMovie() {
                                 <p className="form-help">
                                     Use a direct URL to
                                     the poster image.
+                                </p>
+
+                            </div>
+
+                            <div className="form-group">
+
+                                <label
+                                    htmlFor="videoPath"
+                                    className="form-label"
+                                >
+                                    Video Path
+                                </label>
+
+                                <input
+                                    id="videoPath"
+                                    name="videoPath"
+                                    type="text"
+                                    value={
+                                        form.videoPath
+                                    }
+                                    onChange={
+                                        handleChange
+                                    }
+                                    placeholder="e.g. test-movie.mp4"
+                                />
+
+                                <p className="form-help">
+                                    Enter the video file path stored in Supabase Storage.
                                 </p>
 
                             </div>
