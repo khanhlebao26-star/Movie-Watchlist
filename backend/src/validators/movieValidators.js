@@ -48,6 +48,13 @@ const createMovieSchema = z.object({
         })
         .url("Poster URL must be a valid URL")
         .optional(),
+
+    videoPath: z
+        .string({
+            message: "Video path must be a string",
+        })
+        .trim()
+        .optional(),
 });
 
 /**
@@ -103,6 +110,13 @@ const updateMovieSchema = z.object({
             message: "Poster URL must be a string",
         })
         .url("Poster URL must be a valid URL")
+        .optional(),
+
+    videoPath: z
+        .string({
+            message: "Video path must be a string",
+        })
+        .trim()
         .optional(),
 });
 
