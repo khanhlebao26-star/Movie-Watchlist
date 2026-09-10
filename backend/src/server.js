@@ -5,6 +5,7 @@ import { connectDB, disconnectDB } from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
+import trendingRoutes from "./routes/trendingRoutes.js";
 import videoRoutes from "./routes/videoRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 
@@ -33,6 +34,7 @@ app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
 app.use("/api/videos", videoRoutes);
+app.use("/trending", trendingRoutes);
 
 // 404 handler
 app.use(notFound);
