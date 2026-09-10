@@ -16,7 +16,7 @@ export default function Home({
     const [error, setError] = useState("");
 
     /* =========================================
-       FETCH MOVIES
+    FETCH MOVIES
     ========================================= */
     useEffect(() => {
         const timer = setTimeout(async () => {
@@ -26,7 +26,7 @@ export default function Home({
 
                 const result = await movieApi.getMovies({
                     page,
-                    limit: 10,
+                    limit: 5,
                     search: search || undefined,
                     genre: genre || undefined,
                 });
@@ -96,7 +96,37 @@ export default function Home({
                         <>
                             <MovieList movies={movies} />
 
+                            {/* NAVIGATION ARROWS FOR HOME PAGE */}
                             {pagination && pagination.pages > 1 && (
+                                <div className="movie-section-navigation">
+                                    <button
+                                        type="button"
+                                        className="movie-arrow-button"
+                                        aria-label="Show previous movies"
+                                        disabled={loading || page <= 1}
+                                        onClick={() =>
+                                            setPage((currentPage) => currentPage - 1)
+                                        }
+                                    >
+                                        ←
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="movie-arrow-button"
+                                        aria-label="Show next movies"
+                                        disabled={loading || page >= pagination.pages}
+                                        onClick={() =>
+                                            setPage((currentPage) => currentPage + 1)
+                                        }
+                                    >
+                                        →
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* PAGINATION FOR BROWSE PAGE */}
+                            {/* {isMovieBrowsePage && pagination && pagination.pages > 1 && (
                                 <div className="pagination">
                                     <button
                                         type="button"
@@ -131,7 +161,7 @@ export default function Home({
                                         Next
                                     </button>
                                 </div>
-                            )}
+                            )} */}
                         </>
                     )}
                 </div>

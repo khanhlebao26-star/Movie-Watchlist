@@ -18,6 +18,7 @@ import CreateMovie from "./pages/CreateMovie";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import MovieDetail from "./pages/MovieDetail";
+import Movies from "./pages/Movies";
 import Register from "./pages/Register";
 import Watchlist from "./pages/Watchlist";
 import WatchMovie from "./pages/WatchMovie";
@@ -33,7 +34,7 @@ function AppLayout() {
   const [page, setPage] = useState(1);
 
   const isAuthPage = ["/login", "/register"].includes(location.pathname);
-
+  
   const handleSearchChange = (value) => {
     setSearch(value);
     setPage(1);
@@ -97,7 +98,7 @@ function AppLayout() {
               <Route
                 path="/movies"
                 element={
-                    <Home
+                    <Movies
                         search={search}
                         genre={genre}
                         page={page}
