@@ -6,15 +6,17 @@ import { movieApi } from "../services/api";
 export default function Home({
     search,
     genre,
-    page,
-    setPage,
+    // page,
+    // setPage,
 }) {
     const [movies, setMovies] = useState([]);
-
-    const [pagination, setPagination] = useState(null);
-
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    // const [pagination, setPagination] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const moviesPerSlide = 5;
 
     /* =========================================
     FETCH MOVIES
@@ -26,18 +28,22 @@ export default function Home({
                 setError("");
 
                 const result = await movieApi.getMovies({
-                    page,
-                    limit: 5,
+                    page: 1,
+                    limit: 20,
                     search: search || undefined,
                     genre: genre || undefined,
                 });
 
                 setMovies(result.movies || []);
-                setPagination(result.pagination || null);
+
+                // setPagination(result.pagination || null);
+                setCurrentSlide(0);
             } catch (err) {
-                setError(err.message || "Failed to load movies.");
+                setError(
+                    err.message || "Failed to load movies."
+                );
+
                 setMovies([]);
-                setPagination(null);
             } finally {
                 setLoading(false);
             }
@@ -46,8 +52,24 @@ export default function Home({
         return () => {
             clearTimeout(timer);
         };
-    }, [search, genre, page]);
+    }, [search, genre]);
 
+    const totalSlides = Math.ceil(
+        movies.length / moviesPerSlide
+    );
+
+    const handlePrevious = () => {
+        setCurrentSlide((current) =>
+            Math.max(current - 1, 0)
+        );
+    };
+
+    const handleNext = () => {
+        setCurrentSlide((current) =>
+            Math.min(current + 1, totalSlides - 1)
+        );
+    };
+    
     return (
         <main className="home-page">
             {/* HERO */}
@@ -59,7 +81,7 @@ export default function Home({
                         </span>
 
                         <h1 className="home-hero-title">
-                            Find your next <span> favorite movie.</span>
+                            Find your next{" "} <span> favorite movie.</span>
                         </h1>
 
                         <p className="home-hero-description">
@@ -95,42 +117,84 @@ export default function Home({
                         <div className="error-message">{error}</div>
                     )}
 
-                    {!loading && !error && (
-                        <>
-                            <MovieList movies={movies} />
+                    {!loading && !error && movies.length > 0 && (
+                        <div className="movie-carousel">
 
-                            {/* NAVIGATION ARROWS FOR HOME PAGE */}
-                            {pagination && pagination.pages > 1 && (
-                                <div className="movie-section-navigation">
-                                    <button
-                                        type="button"
-                                        className="movie-arrow-button"
-                                        aria-label="Show previous movies"
-                                        disabled={loading || page <= 1}
-                                        onClick={() =>
-                                            setPage((currentPage) => currentPage - 1)
-                                        }
-                                    >
-                                        ←
-                                    </button>
+                            {/* VIEWPORT */}
+                            <div className="movie-carousel-viewport">
 
-                                    <button
-                                        type="button"
-                                        className="movie-arrow-button"
-                                        aria-label="Show next movies"
-                                        disabled={loading || page >= pagination.pages}
-                                        onClick={() =>
-                                            setPage((currentPage) => currentPage + 1)
-                                        }
-                                    >
-                                        →
-                                    </button>
-                                </div>
-                            )}
+                                {/* TRACK */}
+                                <div 
+                                    className="movie-carousel-track" 
+                                    style={{
+                                        transform: `translateX(-${currentSlide * 100}%)`,
+                                    }}
+                                >
+                                    {/* CREATE SLIDES */}
+                                    {Array.from({
+                                        length: totalSlides,
+                                    }).map((_, index) => {
 
+                                        const startIndex = 
+                                            index * moviesPerSlide;
+
+                                        const slideMovies = 
+                                            movies.slice(
+                                                startIndex,
+                                                startIndex + moviesPerSlide
+                                            );
+                                        
+                                        return (
+                                            <div 
+                                                className="movie-carousel-slide"
+                                                key={index}
+                                            >
+                                                <MovieList
+                                                    movies={slideMovies}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                            </div>
+
+                        </div>
+                        
+
+                        {/* NAVIGATION ARROWS FOR HOME PAGE */}
+                        {totalSlides > 1 && (
+                            <div className="movie-section-navigation">
+                                    
+                                <button
+                                    type="button"
+                                    className="movie-arrow-button"
+                                    aria-label="Show previous movies"
+                                    disabled={currentSlide === 0}
+                                    onClick={handlePrevious}
+                                >
+                                    ←
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="movie-arrow-button"
+                                    aria-label="Show next movies"
+                                    disabled={currentSlide === totalSlides - 1}
+                                    onClick={handleNext}
+                                >
+                                    →
+                                </button>
+
+                            </div>
+                        )}
+                    </div>
                             
-                        </>
-                    )}
+                )}
+                    
+                {!loading && !error && movies.length === 0 && (
+                    <div className="empty-state">
+                        No movies found.
+                    </div>
+                )}
                 </div>
             </section>
         </main>

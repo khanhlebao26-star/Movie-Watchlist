@@ -9,13 +9,13 @@ export default function PersonCard({ person }) {
                     loading="lazy"
                 />
 
-                <button
+                {/* <button
                     type="button"
                     className="person-card-add"
                     aria-label={`Add ${person.name}`}
                 >
                     +
-                </button>
+                </button> */}
             </div>
 
             <p className="person-card-rank">
