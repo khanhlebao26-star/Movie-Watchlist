@@ -20,6 +20,13 @@ export default function MovieDetail() {
 
     const [deleting, setDeleting] = useState(false);
 
+    const [cast, setCast] = useState([]);
+    const [castLoading, setCastLoading] = useState(true);
+
+    const [currentCastSlide, setCurrentCastSlide] = useState(0);
+
+    const castPerSlide = 5;
+
     /* FETCH MOVIE */
     useEffect(() => {
         const fetchMovie = async () => {
@@ -30,6 +37,19 @@ export default function MovieDetail() {
                 const result = await movieApi.getMovieById(id);
 
                 setMovie(result.movie);
+
+                try {
+                    setCastLoading(true);
+
+                    const castResult = await movieApi.getMovieCast(id);
+                    setCast(castResult.cast || []);
+                    setCurrentCastSlide(0); 
+                } catch {
+                    setCast([]);
+                } finally {
+                    setCastLoading(false);
+                }
+
             } catch (err) {
                 setError(
                     err.message || "Failed to load movie."
@@ -127,6 +147,22 @@ export default function MovieDetail() {
     const isOwner =
         user && movie.createdBy === user.id;
 
+    const totalCastSlides = Math.ceil(
+        cast.length / castPerSlide
+    );
+
+    const handlePreviousCast = () => {
+        setCurrentCastSlide((current) =>
+            Math.max(current - 1, 0)
+        );
+    };
+
+    const handleNextCast = () => {
+        setCurrentCastSlide((current) =>
+            Math.min(current + 1, totalCastSlides - 1)
+        );
+    };
+    
     return (
         <main className="movie-detail-page">
             <div className="container">
@@ -219,6 +255,7 @@ export default function MovieDetail() {
 
                         </div>
 
+
                         {/* WATCHLIST */}
                         <div className="movie-detail-actions">
 
@@ -264,17 +301,127 @@ export default function MovieDetail() {
                             )}
 
                         </div>
-
-                        {/* WATCHLIST MESSAGE */}
-                        {/* {watchlistMessage && (
-                            <div className="movie-detail-message">
-                                {watchlistMessage}
-                            </div>
-                        )} */}
-
                     </div>
-
                 </section>
+
+                        <section className="movie-cast-section">
+                            <h2 className="movie-detail-section-title">
+                                Cast
+                            </h2>
+
+                            {castLoading && (
+                                <p className="movie-detail-overview">
+                                    Loading cast...
+                                </p>
+                            )}
+
+                            {!castLoading && cast.length === 0 && (
+                                <p className="movie-detail-overview">
+                                    No cast information found.
+                                </p>
+                            )}
+
+                            {!castLoading && cast.length > 0 && (
+                                <div className="movie-cast-carousel">
+
+                                    {/* VIEWPORT */}
+                                    <div className="movie-cast-viewport">
+
+                                        {/* TRACK */}
+                                        <div
+                                            className="movie-cast-track"
+                                            style={{
+                                                transform: `translateX(-${
+                                                    currentCastSlide * 100
+                                                }%)`,
+                                            }}
+                                        >
+
+                                            {/* CREATE SLIDES */}
+                                            {Array.from({
+                                                length: totalCastSlides,
+                                            }).map((_, index) => {
+
+                                                const startIndex =
+                                                    index * castPerSlide;
+
+                                                const slideCast = cast.slice(
+                                                    startIndex,
+                                                    startIndex + castPerSlide
+                                                );
+
+                                                return (
+                                                    <div
+                                                        className="movie-cast-slide"
+                                                        key={index}
+                                                    >
+                                                        {slideCast.map((actor) => (
+                                                            <article
+                                                                className="movie-cast-card"
+                                                                key={actor.id}
+                                                            >
+                                                                <img
+                                                                    src={
+                                                                        actor.profile_path
+                                                                            ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                                                                            : "https://placehold.co/185x278?text=No+Image"
+                                                                    }
+                                                                    alt={actor.name}
+                                                                />
+
+                                                                <div className="movie-cast-info">
+                                                                    <strong>
+                                                                        {actor.name}
+                                                                    </strong>
+
+                                                                    <span>
+                                                                        {actor.character ||
+                                                                            "Unknown role"}
+                                                                    </span>
+                                                                </div>
+                                                            </article>
+                                                        ))}
+                                                    </div>
+                                                );
+                                            })}
+
+                                        </div>
+                                    </div>
+
+                                    {/* ARROWS */}
+                                    {totalCastSlides > 1 && (
+                                        <div className="movie-cast-navigation">
+
+                                            <button
+                                                type="button"
+                                                className="movie-cast-arrow"
+                                                aria-label="Show previous cast"
+                                                disabled={currentCastSlide === 0}
+                                                onClick={handlePreviousCast}
+                                            >
+                                                ←
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                className="movie-cast-arrow"
+                                                aria-label="Show next cast"
+                                                disabled={
+                                                    currentCastSlide ===
+                                                    totalCastSlides - 1
+                                                }
+                                                onClick={handleNextCast}
+                                            >
+                                                →
+                                            </button>
+
+                                        </div>
+                                    )}
+
+                                </div>
+                            )}
+        
+                        </section>
 
             </div>
         </main>

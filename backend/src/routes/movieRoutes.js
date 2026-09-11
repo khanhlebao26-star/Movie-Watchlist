@@ -4,6 +4,7 @@ import {
     createMovie,
     deleteMovie,
     getMovieById,
+    getMovieCast,
     getMovies,
     updateMovie,
 } from "../controllers/movieController.js";
@@ -16,6 +17,8 @@ import { validateRequest } from "../middleware/validateRequest.js";
 const router = express.Router();
 
 router.get("/", getMovies);
+
+router.get("/:id/cast", getMovieCast);
 
 router.get("/:id", getMovieById);
 
