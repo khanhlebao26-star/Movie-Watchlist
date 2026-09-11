@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList";
+import TrendingPeople from "../components/TrendingPeople";
 import { movieApi } from "../services/api";
 
 export default function Home({
@@ -69,6 +70,8 @@ export default function Home({
                 </div>
             </section>
 
+            <TrendingPeople />
+
             {/* MOVIE SECTION */}
             <section className="home-movies">
                 <div className="container">
@@ -125,43 +128,7 @@ export default function Home({
                                 </div>
                             )}
 
-                            {/* PAGINATION FOR BROWSE PAGE */}
-                            {/* {isMovieBrowsePage && pagination && pagination.pages > 1 && (
-                                <div className="pagination">
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        disabled={page <= 1 || loading}
-                                        onClick={() =>
-                                            setPage(
-                                                (currentPage) => currentPage - 1
-                                            )
-                                        }
-                                    >
-                                        Previous
-                                    </button>
-
-                                    <span>
-                                        Page {pagination.page} of{" "}
-                                        {pagination.pages}
-                                    </span>
-
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        disabled={
-                                            page >= pagination.pages || loading
-                                        }
-                                        onClick={() =>
-                                            setPage(
-                                                (currentPage) => currentPage + 1
-                                            )
-                                        }
-                                    >
-                                        Next
-                                    </button>
-                                </div>
-                            )} */}
+                            
                         </>
                     )}
                 </div>

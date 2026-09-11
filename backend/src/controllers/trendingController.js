@@ -33,9 +33,21 @@ export const getTrendingPeople = async (req, res, next) => {
             throw error;
         }
 
+        const people = data.results
+            .filter((person) => person.profile_path)
+            .map((person, index) => ({
+                id: person.id,
+                name: person.name,
+                rank: index + 1,
+                imageUrl: `https://image.tmdb.org/t/p/w342${person.profile_path}`,
+                popularity: person.popularity,
+            }));
+
         res.status(200).json({
             status: "success",
-            data,
+            data: {
+                people,
+            },
         });
     } catch (error) {
         next(error);

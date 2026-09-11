@@ -128,4 +128,12 @@ export const videoApi = {
     },
 };
 
+export const trendingApi = {
+    getPeople: async () => {
+        const res = await api.get("/trending/people");
+
+        return res.data.data;
+    },
+};
+
 export default api;
