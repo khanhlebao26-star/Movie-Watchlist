@@ -1,0 +1,36 @@
+/* =========================================================
+   WATCH MOVIE
+========================================================= */
+
+.watch-page {
+    min-height: calc(100vh - 72px);
+    padding: 40px 0 80px;
+    background: var(--bg);
+}
+
+.watch-title {
+    margin-bottom: 28px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .watch-page {
+        padding: 28px 0 60px;
+    }
+
+    .watch-title {
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .watch-page {
+        padding: 24px 0 48px;
+    }
+
+    .watch-title {
+        font-size: 24px;
+    }
+}

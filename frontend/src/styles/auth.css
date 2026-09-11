@@ -1,7 +1,7 @@
 /* =========================================================
-   AUTH
+AUTH
 ========================================================= */
- 
+
 .auth-page {
     position: relative;
     min-height: calc(100vh - 72px);
@@ -18,9 +18,9 @@
         ),
         var(--bg);
 }
- 
+
 /* Decorative background */
- 
+
 .auth-page::before {
     content: "";
     position: absolute;
@@ -33,7 +33,7 @@
     filter: blur(80px);
     pointer-events: none;
 }
- 
+
 .auth-page::after {
     content: "";
     position: absolute;
@@ -46,9 +46,9 @@
     filter: blur(80px);
     pointer-events: none;
 }
- 
+
 /* Container */
- 
+
 .auth-container {
     position: relative;
     z-index: 1;

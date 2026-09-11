@@ -1,0 +1,66 @@
+/* =========================================================
+   VIDEO PLAYER
+========================================================= */
+
+.video-player {
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #000000;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-lg);
+}
+
+.video-player-element {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 16 / 9;
+
+    background: #000000;
+}
+
+.video-player-empty {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 300px;
+    padding: 40px;
+
+    color: var(--text-secondary);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .video-player-empty {
+        min-height: 240px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .video-player-empty {
+        min-height: 200px;
+
+        padding: 24px;
+    }
+}

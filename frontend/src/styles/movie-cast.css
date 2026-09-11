@@ -1,0 +1,182 @@
+/* =========================================================
+   MOVIE CAST SECTION
+========================================================= */
+
+.movie-cast-section {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.movie-cast-title {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   MOVIE CAST
+========================================================= */
+
+.movie-cast-carousel {
+    width: 100%;
+}
+
+.movie-cast-viewport {
+    width: 100%;
+
+    overflow: hidden;
+}
+
+.movie-cast-track {
+    display: flex;
+
+    width: 100%;
+
+    transition: transform 0.45s ease;
+}
+
+.movie-cast-slide {
+    flex: 0 0 100%;
+
+    width: 100%;
+    min-width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+/* =========================================================
+   CAST CARD
+========================================================= */
+
+.movie-cast-card {
+    min-width: 0;
+
+    overflow: hidden;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.movie-cast-card img {
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 2 / 3;
+
+    object-fit: cover;
+
+    background: var(--bg-secondary);
+}
+
+.movie-cast-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 10px;
+}
+
+.movie-cast-info strong {
+    font-size: 13px;
+
+    line-height: 1.3;
+}
+
+.movie-cast-info span {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+/* =========================================================
+   CAST NAVIGATION
+========================================================= */
+
+.movie-cast-navigation {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+.movie-cast-arrow {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.movie-cast-arrow:hover:not(:disabled) {
+    background: var(--surface-hover);
+
+    border-color: #3f3f46;
+
+    transform: translateY(-2px);
+}
+
+.movie-cast-arrow:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .movie-cast-slide {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+
+    .movie-cast-slide {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .movie-cast-slide {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+}

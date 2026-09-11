@@ -305,7 +305,7 @@ export default function MovieDetail() {
                 </section>
 
                         <section className="movie-cast-section">
-                            <h2 className="movie-detail-section-title">
+                            <h2 className="movie-cast-title">
                                 Cast
                             </h2>
 
