@@ -85,6 +85,11 @@ export const movieApi = {
 
         return res.data;
     },
+
+    getMovieCast: async (id) => {
+        const res = await api.get(`/movies/${id}/cast`);
+        return res.data.data;
+    },
 };
 
 export const watchlistApi = {

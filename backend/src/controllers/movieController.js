@@ -175,6 +175,85 @@ const deleteMovie = async (req, res, next) => {
     }
 };
 
+const getMovieCast = async (req, res, next) => {
+    try {
+        // 1. Lấy movie từ database local
+        const movie = await prisma.movie.findUnique({
+            where: { id: req.params.id },
+        });
+
+        if (!movie) {
+            return res.status(404).json({
+                status: "error",
+                message: "Movie not found",
+            });
+        }
+
+        // 2. Header để gọi TMDB
+        const headers = {
+            Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
+            Accept: "application/json",
+        };
+
+        // 3. Tìm movie trên TMDB bằng title + năm
+        const searchUrl =
+            `https://api.themoviedb.org/3/search/movie` +
+            `?query=${encodeURIComponent(movie.title)}` +
+            `&year=${movie.releaseYear}`;
+
+        const searchResponse = await fetch(searchUrl, {
+            headers,
+        });
+
+        if (!searchResponse.ok) {
+            throw new Error("Failed to search movie on TMDB");
+        }
+
+        const searchData = await searchResponse.json();
+
+        if (!searchData.results?.length) {
+            return res.status(404).json({
+                status: "error",
+                message: "Movie not found on TMDB",
+            });
+        }
+
+        // 4. Lấy movie đầu tiên từ kết quả TMDB
+        const tmdbMovie = searchData.results[0];
+
+        // 5. Lấy cast
+        const creditsResponse = await fetch(
+            `https://api.themoviedb.org/3/movie/${tmdbMovie.id}/credits`,
+            {
+                headers,
+            }
+        );
+
+        if (!creditsResponse.ok) {
+            throw new Error("Failed to fetch movie cast from TMDB");
+        }
+
+        const creditsData = await creditsResponse.json();
+
+        // 6. Trả dữ liệu về frontend
+        res.status(200).json({
+            status: "success",
+            data: {
+                tmdbMovieId: tmdbMovie.id,
+                cast: creditsData.cast.slice(0, 10),
+            },
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
 export {
-    createMovie, deleteMovie, getMovieById, getMovies, updateMovie
+    createMovie,
+    deleteMovie,
+    getMovieById,
+    getMovieCast,
+    getMovies,
+    updateMovie,
 };

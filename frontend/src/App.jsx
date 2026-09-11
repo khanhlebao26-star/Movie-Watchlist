@@ -89,8 +89,6 @@ function AppLayout() {
                   <Home
                       search={search}
                       genre={genre}
-                      page={page}
-                      setPage={setPage}
                   />
                 }
               />
