@@ -1,7 +1,40 @@
+/* =========================================================
+   LAYOUT
+========================================================= */
+
 @import "./styles/layout.css";
+@import "./styles/navbar.css";
+@import "./styles/footer.css";
+
+
+/* =========================================================
+   SHARED COMPONENTS
+========================================================= */
+
 @import "./styles/components.css";
+
+
+/* =========================================================
+   MOVIE
+========================================================= */
+
+@import "./styles/movies.css";
 @import "./styles/home.css";
 @import "./styles/movie-detail.css";
+@import "./styles/movie-cast.css";
+
+/* =========================================================
+   VIDEO
+========================================================= */
+
+@import "./styles/video-player.css";
+@import "./styles/watch.css";
+
+/* =========================================================
+   OTHER PAGES / COMPONENTS
+========================================================= */
+
 @import "./styles/auth.css";
 @import "./styles/watchlist.css";
 @import "./styles/movie-form.css";
+@import "./styles/person-card.css";
