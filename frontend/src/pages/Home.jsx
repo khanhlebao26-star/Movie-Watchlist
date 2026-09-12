@@ -6,14 +6,11 @@ import { movieApi } from "../services/api";
 export default function Home({
     search,
     genre,
-    // page,
-    // setPage,
 }) {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    // const [pagination, setPagination] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const moviesPerSlide = 5;
@@ -36,7 +33,6 @@ export default function Home({
 
                 setMovies(result.movies || []);
 
-                // setPagination(result.pagination || null);
                 setCurrentSlide(0);
             } catch (err) {
                 setError(
@@ -76,18 +72,65 @@ export default function Home({
             <section className="home-hero">
                 <div className="container">
                     <div className="home-hero-content">
+                        
+                        {/* LABEL */}
                         <span className="home-hero-label">
                             YOUR PERSONAL MOVIE SPACE
                         </span>
 
+                        {/* TITLE */}
                         <h1 className="home-hero-title">
-                            Find your next{" "} <span> favorite movie.</span>
+                            Find your next
+                            <span> favorite movie.</span>
                         </h1>
 
+                        {/* DESCRIPTION */}
                         <p className="home-hero-description">
-                            Discover movies, explore new stories, and keep track
-                            of everything you want to watch.
+                            Discover new movies, explore your favorite actors,
+                            and save everything you want to watch — all in one place.
                         </p>
+
+                        {/* ACTIONS */}
+                        <div className="home-hero-actions">
+
+                            <a
+                                href="/movies"
+                                className="home-hero-button home-hero-button-primary"
+                            >
+                                <span>▶</span>
+                                Explore Movies
+                            </a>
+
+                            <a 
+                                href="/watchlist"
+                                className="home-hero-button home-hero-button-secondary"
+                            >
+                                <span>♡</span>
+                                My Watchlist
+                            </a>
+
+                        </div>
+
+                        {/* STATS */}
+                        <div className="home-hero-stats">
+
+                            <div className="home-hero-stat">
+                                <strong>12,400+</strong>
+                                <span>MOVIES IN LIBRARY</span>
+                            </div>
+
+                            <div className="home-hero-stat">
+                                <strong>30+</strong>
+                                <span>GENRES</span>
+                            </div>
+
+                            <div className="home-hero-stat">
+                                <strong>Daily</strong>
+                                <span>NEW UPDATES</span>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </section>
