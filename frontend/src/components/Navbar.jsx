@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import searchIcon from "../assets/search-icon.png";
 import { useAuth } from "../context/useAuth";
 
 export default function Navbar({
@@ -56,7 +57,9 @@ export default function Navbar({
                         value={search}
                         onChange={(e) => onSearchChange(e.target.value)}
                     />
-                    <span className="navbar-search-icon">🔍</span>
+                    <button type="button" className="navbar-search-icon">
+                        <img src={searchIcon} alt="Search" />
+                    </button>
 
                 </div>
             </div>
