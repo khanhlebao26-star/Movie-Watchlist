@@ -149,6 +149,33 @@ export default function Home({
                                 Explore movies and find something worth watching.
                             </p>
                         </div>
+
+                        {/* NAVIGATION ARROWS FOR HOME PAGE */}
+                        {totalSlides > 1 && (
+                            <div className="movie-section-navigation">
+                                    
+                                <button
+                                    type="button"
+                                    className="movie-arrow-button"
+                                    aria-label="Show previous movies"
+                                    disabled={currentSlide === 0}
+                                    onClick={handlePrevious}
+                                >
+                                    ←
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="movie-arrow-button"
+                                    aria-label="Show next movies"
+                                    disabled={currentSlide === totalSlides - 1}
+                                    onClick={handleNext}
+                                >
+                                    →
+                                </button>
+
+                            </div>
+                        )}
                     </div>
 
                     {/* MOVIE RESULT */}
@@ -203,32 +230,7 @@ export default function Home({
                         </div>
                         
 
-                        {/* NAVIGATION ARROWS FOR HOME PAGE */}
-                        {totalSlides > 1 && (
-                            <div className="movie-section-navigation">
-                                    
-                                <button
-                                    type="button"
-                                    className="movie-arrow-button"
-                                    aria-label="Show previous movies"
-                                    disabled={currentSlide === 0}
-                                    onClick={handlePrevious}
-                                >
-                                    ←
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="movie-arrow-button"
-                                    aria-label="Show next movies"
-                                    disabled={currentSlide === totalSlides - 1}
-                                    onClick={handleNext}
-                                >
-                                    →
-                                </button>
-
-                            </div>
-                        )}
+                        
                     </div>
                             
                 )}
