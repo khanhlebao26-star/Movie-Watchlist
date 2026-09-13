@@ -14,6 +14,7 @@ import { AuthProvider } from "./context/AuthProvider";
 
 import Footer from "./components/Footer";
 import { ToastProvider } from "./context/ToastProvider";
+import { WatchlistProvider } from "./context/WatchlistProvider";
 import CreateMovie from "./pages/CreateMovie";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -151,11 +152,13 @@ function AppLayout() {
 export default function App() {
   return (
     <AuthProvider>
-      <ToastProvider>
-        <BrowserRouter>
-          <AppLayout />
-        </BrowserRouter>
-      </ToastProvider>
+      <WatchlistProvider>
+        <ToastProvider>
+          <BrowserRouter>
+            <AppLayout/>
+          </BrowserRouter>
+        </ToastProvider>
+      </WatchlistProvider>
     </AuthProvider>
   );
 }

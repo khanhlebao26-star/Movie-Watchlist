@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useWatchlist } from "../context/useWatchlist";
 
 import { useAuth } from "../context/useAuth";
 import { useToast } from "../context/useToast";
@@ -11,7 +12,12 @@ export default function MovieCard({ movie }) {
     const { showToast } = useToast();
 
     const [addingToWatchlist, setAddingToWatchlist] = useState(false);
-    const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+    const {
+        isMovieInWatchlist,
+        addMovieToWatchlist,
+    } = useWatchlist();
+
+    const addedToWatchlist = isMovieInWatchlist(movie.id);
 
     const handleAddToWatchlist = async (event) => {
         // Prevent the click from triggering the poster link
@@ -37,7 +43,7 @@ export default function MovieCard({ movie }) {
             });
 
             // Change + → ✓
-            setAddedToWatchlist(true);
+            addMovieToWatchlist(movie.id);
 
             showToast(
                 "Movie added to your watchlist.",
