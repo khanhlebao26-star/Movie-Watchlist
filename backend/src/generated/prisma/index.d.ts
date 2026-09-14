@@ -28,6 +28,11 @@ export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
  * 
  */
 export type WatchListItem = $Result.DefaultSelection<Prisma.$WatchListItemPayload>
+/**
+ * Model WatchProgress
+ * 
+ */
+export type WatchProgress = $Result.DefaultSelection<Prisma.$WatchProgressPayload>
 
 /**
  * Enums
@@ -198,6 +203,16 @@ export class PrismaClient<
     * ```
     */
   get watchListItem(): Prisma.WatchListItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.watchProgress`: Exposes CRUD operations for the **WatchProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WatchProgresses
+    * const watchProgresses = await prisma.watchProgress.findMany()
+    * ```
+    */
+  get watchProgress(): Prisma.WatchProgressDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -647,7 +662,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Movie: 'Movie',
-    WatchListItem: 'WatchListItem'
+    WatchListItem: 'WatchListItem',
+    WatchProgress: 'WatchProgress'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -663,7 +679,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "movie" | "watchListItem"
+      modelProps: "user" | "movie" | "watchListItem" | "watchProgress"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -889,6 +905,80 @@ export namespace Prisma {
           }
         }
       }
+      WatchProgress: {
+        payload: Prisma.$WatchProgressPayload<ExtArgs>
+        fields: Prisma.WatchProgressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WatchProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WatchProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          findFirst: {
+            args: Prisma.WatchProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WatchProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          findMany: {
+            args: Prisma.WatchProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>[]
+          }
+          create: {
+            args: Prisma.WatchProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          createMany: {
+            args: Prisma.WatchProgressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WatchProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>[]
+          }
+          delete: {
+            args: Prisma.WatchProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          update: {
+            args: Prisma.WatchProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          deleteMany: {
+            args: Prisma.WatchProgressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WatchProgressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WatchProgressUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>[]
+          }
+          upsert: {
+            args: Prisma.WatchProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WatchProgressPayload>
+          }
+          aggregate: {
+            args: Prisma.WatchProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWatchProgress>
+          }
+          groupBy: {
+            args: Prisma.WatchProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WatchProgressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WatchProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<WatchProgressCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1015,6 +1105,7 @@ export namespace Prisma {
     user?: UserOmit
     movie?: MovieOmit
     watchListItem?: WatchListItemOmit
+    watchProgress?: WatchProgressOmit
   }
 
   /* Types for Logging */
@@ -1097,11 +1188,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     movies: number
     watchListItems: number
+    watchProgress: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movies?: boolean | UserCountOutputTypeCountMoviesArgs
     watchListItems?: boolean | UserCountOutputTypeCountWatchListItemsArgs
+    watchProgress?: boolean | UserCountOutputTypeCountWatchProgressArgs
   }
 
   // Custom InputTypes
@@ -1129,6 +1222,13 @@ export namespace Prisma {
     where?: WatchListItemWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWatchProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WatchProgressWhereInput
+  }
+
 
   /**
    * Count Type MovieCountOutputType
@@ -1136,10 +1236,12 @@ export namespace Prisma {
 
   export type MovieCountOutputType = {
     watchListItems: number
+    watchProgress: number
   }
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     watchListItems?: boolean | MovieCountOutputTypeCountWatchListItemsArgs
+    watchProgress?: boolean | MovieCountOutputTypeCountWatchProgressArgs
   }
 
   // Custom InputTypes
@@ -1158,6 +1260,13 @@ export namespace Prisma {
    */
   export type MovieCountOutputTypeCountWatchListItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WatchListItemWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountWatchProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WatchProgressWhereInput
   }
 
 
@@ -1331,6 +1440,7 @@ export namespace Prisma {
     createdAt?: boolean
     movies?: boolean | User$moviesArgs<ExtArgs>
     watchListItems?: boolean | User$watchListItemsArgs<ExtArgs>
+    watchProgress?: boolean | User$watchProgressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1362,6 +1472,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movies?: boolean | User$moviesArgs<ExtArgs>
     watchListItems?: boolean | User$watchListItemsArgs<ExtArgs>
+    watchProgress?: boolean | User$watchProgressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1372,6 +1483,7 @@ export namespace Prisma {
     objects: {
       movies: Prisma.$MoviePayload<ExtArgs>[]
       watchListItems: Prisma.$WatchListItemPayload<ExtArgs>[]
+      watchProgress: Prisma.$WatchProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1775,6 +1887,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     movies<T extends User$moviesArgs<ExtArgs> = {}>(args?: Subset<T, User$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     watchListItems<T extends User$watchListItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$watchListItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    watchProgress<T extends User$watchProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$watchProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2250,6 +2363,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.watchProgress
+   */
+  export type User$watchProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    where?: WatchProgressWhereInput
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    cursor?: WatchProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WatchProgressScalarFieldEnum | WatchProgressScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2508,6 +2645,7 @@ export namespace Prisma {
     createdAt?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
     watchListItems?: boolean | Movie$watchListItemsArgs<ExtArgs>
+    watchProgress?: boolean | Movie$watchProgressArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
@@ -2556,6 +2694,7 @@ export namespace Prisma {
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
     watchListItems?: boolean | Movie$watchListItemsArgs<ExtArgs>
+    watchProgress?: boolean | Movie$watchProgressArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2570,6 +2709,7 @@ export namespace Prisma {
     objects: {
       creator: Prisma.$UserPayload<ExtArgs>
       watchListItems: Prisma.$WatchListItemPayload<ExtArgs>[]
+      watchProgress: Prisma.$WatchProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2978,6 +3118,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     watchListItems<T extends Movie$watchListItemsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchListItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    watchProgress<T extends Movie$watchProgressArgs<ExtArgs> = {}>(args?: Subset<T, Movie$watchProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3439,6 +3580,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WatchListItemScalarFieldEnum | WatchListItemScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.watchProgress
+   */
+  export type Movie$watchProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    where?: WatchProgressWhereInput
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    cursor?: WatchProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WatchProgressScalarFieldEnum | WatchProgressScalarFieldEnum[]
   }
 
   /**
@@ -4605,6 +4770,1154 @@ export namespace Prisma {
 
 
   /**
+   * Model WatchProgress
+   */
+
+  export type AggregateWatchProgress = {
+    _count: WatchProgressCountAggregateOutputType | null
+    _avg: WatchProgressAvgAggregateOutputType | null
+    _sum: WatchProgressSumAggregateOutputType | null
+    _min: WatchProgressMinAggregateOutputType | null
+    _max: WatchProgressMaxAggregateOutputType | null
+  }
+
+  export type WatchProgressAvgAggregateOutputType = {
+    positionSeconds: number | null
+    durationSeconds: number | null
+  }
+
+  export type WatchProgressSumAggregateOutputType = {
+    positionSeconds: number | null
+    durationSeconds: number | null
+  }
+
+  export type WatchProgressMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    movieId: string | null
+    positionSeconds: number | null
+    durationSeconds: number | null
+    completed: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WatchProgressMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    movieId: string | null
+    positionSeconds: number | null
+    durationSeconds: number | null
+    completed: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WatchProgressCountAggregateOutputType = {
+    id: number
+    userId: number
+    movieId: number
+    positionSeconds: number
+    durationSeconds: number
+    completed: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WatchProgressAvgAggregateInputType = {
+    positionSeconds?: true
+    durationSeconds?: true
+  }
+
+  export type WatchProgressSumAggregateInputType = {
+    positionSeconds?: true
+    durationSeconds?: true
+  }
+
+  export type WatchProgressMinAggregateInputType = {
+    id?: true
+    userId?: true
+    movieId?: true
+    positionSeconds?: true
+    durationSeconds?: true
+    completed?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WatchProgressMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    movieId?: true
+    positionSeconds?: true
+    durationSeconds?: true
+    completed?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WatchProgressCountAggregateInputType = {
+    id?: true
+    userId?: true
+    movieId?: true
+    positionSeconds?: true
+    durationSeconds?: true
+    completed?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WatchProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WatchProgress to aggregate.
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WatchProgresses to fetch.
+     */
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WatchProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WatchProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WatchProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WatchProgresses
+    **/
+    _count?: true | WatchProgressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WatchProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WatchProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WatchProgressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WatchProgressMaxAggregateInputType
+  }
+
+  export type GetWatchProgressAggregateType<T extends WatchProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateWatchProgress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWatchProgress[P]>
+      : GetScalarType<T[P], AggregateWatchProgress[P]>
+  }
+
+
+
+
+  export type WatchProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WatchProgressWhereInput
+    orderBy?: WatchProgressOrderByWithAggregationInput | WatchProgressOrderByWithAggregationInput[]
+    by: WatchProgressScalarFieldEnum[] | WatchProgressScalarFieldEnum
+    having?: WatchProgressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WatchProgressCountAggregateInputType | true
+    _avg?: WatchProgressAvgAggregateInputType
+    _sum?: WatchProgressSumAggregateInputType
+    _min?: WatchProgressMinAggregateInputType
+    _max?: WatchProgressMaxAggregateInputType
+  }
+
+  export type WatchProgressGroupByOutputType = {
+    id: string
+    userId: string
+    movieId: string
+    positionSeconds: number
+    durationSeconds: number | null
+    completed: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: WatchProgressCountAggregateOutputType | null
+    _avg: WatchProgressAvgAggregateOutputType | null
+    _sum: WatchProgressSumAggregateOutputType | null
+    _min: WatchProgressMinAggregateOutputType | null
+    _max: WatchProgressMaxAggregateOutputType | null
+  }
+
+  type GetWatchProgressGroupByPayload<T extends WatchProgressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WatchProgressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WatchProgressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WatchProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], WatchProgressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WatchProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    movieId?: boolean
+    positionSeconds?: boolean
+    durationSeconds?: boolean
+    completed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watchProgress"]>
+
+  export type WatchProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    movieId?: boolean
+    positionSeconds?: boolean
+    durationSeconds?: boolean
+    completed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watchProgress"]>
+
+  export type WatchProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    movieId?: boolean
+    positionSeconds?: boolean
+    durationSeconds?: boolean
+    completed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watchProgress"]>
+
+  export type WatchProgressSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    movieId?: boolean
+    positionSeconds?: boolean
+    durationSeconds?: boolean
+    completed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WatchProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "movieId" | "positionSeconds" | "durationSeconds" | "completed" | "createdAt" | "updatedAt", ExtArgs["result"]["watchProgress"]>
+  export type WatchProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }
+  export type WatchProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }
+  export type WatchProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    movie?: boolean | MovieDefaultArgs<ExtArgs>
+  }
+
+  export type $WatchProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WatchProgress"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      movie: Prisma.$MoviePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      movieId: string
+      positionSeconds: number
+      durationSeconds: number | null
+      completed: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["watchProgress"]>
+    composites: {}
+  }
+
+  type WatchProgressGetPayload<S extends boolean | null | undefined | WatchProgressDefaultArgs> = $Result.GetResult<Prisma.$WatchProgressPayload, S>
+
+  type WatchProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WatchProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WatchProgressCountAggregateInputType | true
+    }
+
+  export interface WatchProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WatchProgress'], meta: { name: 'WatchProgress' } }
+    /**
+     * Find zero or one WatchProgress that matches the filter.
+     * @param {WatchProgressFindUniqueArgs} args - Arguments to find a WatchProgress
+     * @example
+     * // Get one WatchProgress
+     * const watchProgress = await prisma.watchProgress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WatchProgressFindUniqueArgs>(args: SelectSubset<T, WatchProgressFindUniqueArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WatchProgress that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WatchProgressFindUniqueOrThrowArgs} args - Arguments to find a WatchProgress
+     * @example
+     * // Get one WatchProgress
+     * const watchProgress = await prisma.watchProgress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WatchProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, WatchProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WatchProgress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressFindFirstArgs} args - Arguments to find a WatchProgress
+     * @example
+     * // Get one WatchProgress
+     * const watchProgress = await prisma.watchProgress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WatchProgressFindFirstArgs>(args?: SelectSubset<T, WatchProgressFindFirstArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WatchProgress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressFindFirstOrThrowArgs} args - Arguments to find a WatchProgress
+     * @example
+     * // Get one WatchProgress
+     * const watchProgress = await prisma.watchProgress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WatchProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, WatchProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WatchProgresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WatchProgresses
+     * const watchProgresses = await prisma.watchProgress.findMany()
+     * 
+     * // Get first 10 WatchProgresses
+     * const watchProgresses = await prisma.watchProgress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const watchProgressWithIdOnly = await prisma.watchProgress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WatchProgressFindManyArgs>(args?: SelectSubset<T, WatchProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WatchProgress.
+     * @param {WatchProgressCreateArgs} args - Arguments to create a WatchProgress.
+     * @example
+     * // Create one WatchProgress
+     * const WatchProgress = await prisma.watchProgress.create({
+     *   data: {
+     *     // ... data to create a WatchProgress
+     *   }
+     * })
+     * 
+     */
+    create<T extends WatchProgressCreateArgs>(args: SelectSubset<T, WatchProgressCreateArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WatchProgresses.
+     * @param {WatchProgressCreateManyArgs} args - Arguments to create many WatchProgresses.
+     * @example
+     * // Create many WatchProgresses
+     * const watchProgress = await prisma.watchProgress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WatchProgressCreateManyArgs>(args?: SelectSubset<T, WatchProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WatchProgresses and returns the data saved in the database.
+     * @param {WatchProgressCreateManyAndReturnArgs} args - Arguments to create many WatchProgresses.
+     * @example
+     * // Create many WatchProgresses
+     * const watchProgress = await prisma.watchProgress.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WatchProgresses and only return the `id`
+     * const watchProgressWithIdOnly = await prisma.watchProgress.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WatchProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, WatchProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WatchProgress.
+     * @param {WatchProgressDeleteArgs} args - Arguments to delete one WatchProgress.
+     * @example
+     * // Delete one WatchProgress
+     * const WatchProgress = await prisma.watchProgress.delete({
+     *   where: {
+     *     // ... filter to delete one WatchProgress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WatchProgressDeleteArgs>(args: SelectSubset<T, WatchProgressDeleteArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WatchProgress.
+     * @param {WatchProgressUpdateArgs} args - Arguments to update one WatchProgress.
+     * @example
+     * // Update one WatchProgress
+     * const watchProgress = await prisma.watchProgress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WatchProgressUpdateArgs>(args: SelectSubset<T, WatchProgressUpdateArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WatchProgresses.
+     * @param {WatchProgressDeleteManyArgs} args - Arguments to filter WatchProgresses to delete.
+     * @example
+     * // Delete a few WatchProgresses
+     * const { count } = await prisma.watchProgress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WatchProgressDeleteManyArgs>(args?: SelectSubset<T, WatchProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WatchProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WatchProgresses
+     * const watchProgress = await prisma.watchProgress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WatchProgressUpdateManyArgs>(args: SelectSubset<T, WatchProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WatchProgresses and returns the data updated in the database.
+     * @param {WatchProgressUpdateManyAndReturnArgs} args - Arguments to update many WatchProgresses.
+     * @example
+     * // Update many WatchProgresses
+     * const watchProgress = await prisma.watchProgress.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WatchProgresses and only return the `id`
+     * const watchProgressWithIdOnly = await prisma.watchProgress.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WatchProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, WatchProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WatchProgress.
+     * @param {WatchProgressUpsertArgs} args - Arguments to update or create a WatchProgress.
+     * @example
+     * // Update or create a WatchProgress
+     * const watchProgress = await prisma.watchProgress.upsert({
+     *   create: {
+     *     // ... data to create a WatchProgress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WatchProgress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WatchProgressUpsertArgs>(args: SelectSubset<T, WatchProgressUpsertArgs<ExtArgs>>): Prisma__WatchProgressClient<$Result.GetResult<Prisma.$WatchProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WatchProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressCountArgs} args - Arguments to filter WatchProgresses to count.
+     * @example
+     * // Count the number of WatchProgresses
+     * const count = await prisma.watchProgress.count({
+     *   where: {
+     *     // ... the filter for the WatchProgresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends WatchProgressCountArgs>(
+      args?: Subset<T, WatchProgressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WatchProgressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WatchProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WatchProgressAggregateArgs>(args: Subset<T, WatchProgressAggregateArgs>): Prisma.PrismaPromise<GetWatchProgressAggregateType<T>>
+
+    /**
+     * Group by WatchProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WatchProgressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WatchProgressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WatchProgressGroupByArgs['orderBy'] }
+        : { orderBy?: WatchProgressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WatchProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWatchProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WatchProgress model
+   */
+  readonly fields: WatchProgressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WatchProgress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WatchProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    movie<T extends MovieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MovieDefaultArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WatchProgress model
+   */
+  interface WatchProgressFieldRefs {
+    readonly id: FieldRef<"WatchProgress", 'String'>
+    readonly userId: FieldRef<"WatchProgress", 'String'>
+    readonly movieId: FieldRef<"WatchProgress", 'String'>
+    readonly positionSeconds: FieldRef<"WatchProgress", 'Float'>
+    readonly durationSeconds: FieldRef<"WatchProgress", 'Float'>
+    readonly completed: FieldRef<"WatchProgress", 'Boolean'>
+    readonly createdAt: FieldRef<"WatchProgress", 'DateTime'>
+    readonly updatedAt: FieldRef<"WatchProgress", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WatchProgress findUnique
+   */
+  export type WatchProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which WatchProgress to fetch.
+     */
+    where: WatchProgressWhereUniqueInput
+  }
+
+  /**
+   * WatchProgress findUniqueOrThrow
+   */
+  export type WatchProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which WatchProgress to fetch.
+     */
+    where: WatchProgressWhereUniqueInput
+  }
+
+  /**
+   * WatchProgress findFirst
+   */
+  export type WatchProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which WatchProgress to fetch.
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WatchProgresses to fetch.
+     */
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WatchProgresses.
+     */
+    cursor?: WatchProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WatchProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WatchProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WatchProgresses.
+     */
+    distinct?: WatchProgressScalarFieldEnum | WatchProgressScalarFieldEnum[]
+  }
+
+  /**
+   * WatchProgress findFirstOrThrow
+   */
+  export type WatchProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which WatchProgress to fetch.
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WatchProgresses to fetch.
+     */
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WatchProgresses.
+     */
+    cursor?: WatchProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WatchProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WatchProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WatchProgresses.
+     */
+    distinct?: WatchProgressScalarFieldEnum | WatchProgressScalarFieldEnum[]
+  }
+
+  /**
+   * WatchProgress findMany
+   */
+  export type WatchProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which WatchProgresses to fetch.
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WatchProgresses to fetch.
+     */
+    orderBy?: WatchProgressOrderByWithRelationInput | WatchProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WatchProgresses.
+     */
+    cursor?: WatchProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WatchProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WatchProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WatchProgresses.
+     */
+    distinct?: WatchProgressScalarFieldEnum | WatchProgressScalarFieldEnum[]
+  }
+
+  /**
+   * WatchProgress create
+   */
+  export type WatchProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WatchProgress.
+     */
+    data: XOR<WatchProgressCreateInput, WatchProgressUncheckedCreateInput>
+  }
+
+  /**
+   * WatchProgress createMany
+   */
+  export type WatchProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WatchProgresses.
+     */
+    data: WatchProgressCreateManyInput | WatchProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WatchProgress createManyAndReturn
+   */
+  export type WatchProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * The data used to create many WatchProgresses.
+     */
+    data: WatchProgressCreateManyInput | WatchProgressCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WatchProgress update
+   */
+  export type WatchProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WatchProgress.
+     */
+    data: XOR<WatchProgressUpdateInput, WatchProgressUncheckedUpdateInput>
+    /**
+     * Choose, which WatchProgress to update.
+     */
+    where: WatchProgressWhereUniqueInput
+  }
+
+  /**
+   * WatchProgress updateMany
+   */
+  export type WatchProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WatchProgresses.
+     */
+    data: XOR<WatchProgressUpdateManyMutationInput, WatchProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which WatchProgresses to update
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * Limit how many WatchProgresses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WatchProgress updateManyAndReturn
+   */
+  export type WatchProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * The data used to update WatchProgresses.
+     */
+    data: XOR<WatchProgressUpdateManyMutationInput, WatchProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which WatchProgresses to update
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * Limit how many WatchProgresses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WatchProgress upsert
+   */
+  export type WatchProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WatchProgress to update in case it exists.
+     */
+    where: WatchProgressWhereUniqueInput
+    /**
+     * In case the WatchProgress found by the `where` argument doesn't exist, create a new WatchProgress with this data.
+     */
+    create: XOR<WatchProgressCreateInput, WatchProgressUncheckedCreateInput>
+    /**
+     * In case the WatchProgress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WatchProgressUpdateInput, WatchProgressUncheckedUpdateInput>
+  }
+
+  /**
+   * WatchProgress delete
+   */
+  export type WatchProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+    /**
+     * Filter which WatchProgress to delete.
+     */
+    where: WatchProgressWhereUniqueInput
+  }
+
+  /**
+   * WatchProgress deleteMany
+   */
+  export type WatchProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WatchProgresses to delete
+     */
+    where?: WatchProgressWhereInput
+    /**
+     * Limit how many WatchProgresses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WatchProgress without action
+   */
+  export type WatchProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WatchProgress
+     */
+    select?: WatchProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WatchProgress
+     */
+    omit?: WatchProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WatchProgressInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4657,6 +5970,20 @@ export namespace Prisma {
   };
 
   export type WatchListItemScalarFieldEnum = (typeof WatchListItemScalarFieldEnum)[keyof typeof WatchListItemScalarFieldEnum]
+
+
+  export const WatchProgressScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    movieId: 'movieId',
+    positionSeconds: 'positionSeconds',
+    durationSeconds: 'durationSeconds',
+    completed: 'completed',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WatchProgressScalarFieldEnum = (typeof WatchProgressScalarFieldEnum)[keyof typeof WatchProgressScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4756,6 +6083,13 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -4772,6 +6106,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     movies?: MovieListRelationFilter
     watchListItems?: WatchListItemListRelationFilter
+    watchProgress?: WatchProgressListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4782,6 +6117,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     movies?: MovieOrderByRelationAggregateInput
     watchListItems?: WatchListItemOrderByRelationAggregateInput
+    watchProgress?: WatchProgressOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4795,6 +6131,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     movies?: MovieListRelationFilter
     watchListItems?: WatchListItemListRelationFilter
+    watchProgress?: WatchProgressListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4835,6 +6172,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
     watchListItems?: WatchListItemListRelationFilter
+    watchProgress?: WatchProgressListRelationFilter
   }
 
   export type MovieOrderByWithRelationInput = {
@@ -4850,6 +6188,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     creator?: UserOrderByWithRelationInput
     watchListItems?: WatchListItemOrderByRelationAggregateInput
+    watchProgress?: WatchProgressOrderByRelationAggregateInput
   }
 
   export type MovieWhereUniqueInput = Prisma.AtLeast<{
@@ -4868,6 +6207,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
     watchListItems?: WatchListItemListRelationFilter
+    watchProgress?: WatchProgressListRelationFilter
   }, "id">
 
   export type MovieOrderByWithAggregationInput = {
@@ -4980,6 +6320,82 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"WatchListItem"> | Date | string
   }
 
+  export type WatchProgressWhereInput = {
+    AND?: WatchProgressWhereInput | WatchProgressWhereInput[]
+    OR?: WatchProgressWhereInput[]
+    NOT?: WatchProgressWhereInput | WatchProgressWhereInput[]
+    id?: StringFilter<"WatchProgress"> | string
+    userId?: StringFilter<"WatchProgress"> | string
+    movieId?: StringFilter<"WatchProgress"> | string
+    positionSeconds?: FloatFilter<"WatchProgress"> | number
+    durationSeconds?: FloatNullableFilter<"WatchProgress"> | number | null
+    completed?: BoolFilter<"WatchProgress"> | boolean
+    createdAt?: DateTimeFilter<"WatchProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WatchProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    movie?: XOR<MovieScalarRelationFilter, MovieWhereInput>
+  }
+
+  export type WatchProgressOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    movieId?: SortOrder
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrderInput | SortOrder
+    completed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    movie?: MovieOrderByWithRelationInput
+  }
+
+  export type WatchProgressWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_movieId?: WatchProgressUserIdMovieIdCompoundUniqueInput
+    AND?: WatchProgressWhereInput | WatchProgressWhereInput[]
+    OR?: WatchProgressWhereInput[]
+    NOT?: WatchProgressWhereInput | WatchProgressWhereInput[]
+    userId?: StringFilter<"WatchProgress"> | string
+    movieId?: StringFilter<"WatchProgress"> | string
+    positionSeconds?: FloatFilter<"WatchProgress"> | number
+    durationSeconds?: FloatNullableFilter<"WatchProgress"> | number | null
+    completed?: BoolFilter<"WatchProgress"> | boolean
+    createdAt?: DateTimeFilter<"WatchProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WatchProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    movie?: XOR<MovieScalarRelationFilter, MovieWhereInput>
+  }, "id" | "userId_movieId">
+
+  export type WatchProgressOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    movieId?: SortOrder
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrderInput | SortOrder
+    completed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WatchProgressCountOrderByAggregateInput
+    _avg?: WatchProgressAvgOrderByAggregateInput
+    _max?: WatchProgressMaxOrderByAggregateInput
+    _min?: WatchProgressMinOrderByAggregateInput
+    _sum?: WatchProgressSumOrderByAggregateInput
+  }
+
+  export type WatchProgressScalarWhereWithAggregatesInput = {
+    AND?: WatchProgressScalarWhereWithAggregatesInput | WatchProgressScalarWhereWithAggregatesInput[]
+    OR?: WatchProgressScalarWhereWithAggregatesInput[]
+    NOT?: WatchProgressScalarWhereWithAggregatesInput | WatchProgressScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WatchProgress"> | string
+    userId?: StringWithAggregatesFilter<"WatchProgress"> | string
+    movieId?: StringWithAggregatesFilter<"WatchProgress"> | string
+    positionSeconds?: FloatWithAggregatesFilter<"WatchProgress"> | number
+    durationSeconds?: FloatNullableWithAggregatesFilter<"WatchProgress"> | number | null
+    completed?: BoolWithAggregatesFilter<"WatchProgress"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"WatchProgress"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WatchProgress"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -4988,6 +6404,7 @@ export namespace Prisma {
     createdAt?: Date | string
     movies?: MovieCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4998,6 +6415,7 @@ export namespace Prisma {
     createdAt?: Date | string
     movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -5008,6 +6426,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5018,6 +6437,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5056,6 +6476,7 @@ export namespace Prisma {
     createdAt?: Date | string
     creator: UserCreateNestedOneWithoutMoviesInput
     watchListItems?: WatchListItemCreateNestedManyWithoutMovieInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateInput = {
@@ -5070,6 +6491,7 @@ export namespace Prisma {
     createdBy: string
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutMovieInput
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUpdateInput = {
@@ -5084,6 +6506,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutMoviesNestedInput
     watchListItems?: WatchListItemUpdateManyWithoutMovieNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
@@ -5098,6 +6521,7 @@ export namespace Prisma {
     createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutMovieNestedInput
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieCreateManyInput = {
@@ -5213,6 +6637,81 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WatchProgressCreateInput = {
+    id?: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutWatchProgressInput
+    movie: MovieCreateNestedOneWithoutWatchProgressInput
+  }
+
+  export type WatchProgressUncheckedCreateInput = {
+    id?: string
+    userId: string
+    movieId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WatchProgressUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWatchProgressNestedInput
+    movie?: MovieUpdateOneRequiredWithoutWatchProgressNestedInput
+  }
+
+  export type WatchProgressUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WatchProgressCreateManyInput = {
+    id?: string
+    userId: string
+    movieId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WatchProgressUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WatchProgressUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5251,11 +6750,21 @@ export namespace Prisma {
     none?: WatchListItemWhereInput
   }
 
+  export type WatchProgressListRelationFilter = {
+    every?: WatchProgressWhereInput
+    some?: WatchProgressWhereInput
+    none?: WatchProgressWhereInput
+  }
+
   export type MovieOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type WatchListItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WatchProgressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5535,6 +7044,121 @@ export namespace Prisma {
     _max?: NestedEnumWatchListStatusFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type WatchProgressUserIdMovieIdCompoundUniqueInput = {
+    userId: string
+    movieId: string
+  }
+
+  export type WatchProgressCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    movieId?: SortOrder
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrder
+    completed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WatchProgressAvgOrderByAggregateInput = {
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrder
+  }
+
+  export type WatchProgressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    movieId?: SortOrder
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrder
+    completed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WatchProgressMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    movieId?: SortOrder
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrder
+    completed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WatchProgressSumOrderByAggregateInput = {
+    positionSeconds?: SortOrder
+    durationSeconds?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type MovieCreateNestedManyWithoutCreatorInput = {
     create?: XOR<MovieCreateWithoutCreatorInput, MovieUncheckedCreateWithoutCreatorInput> | MovieCreateWithoutCreatorInput[] | MovieUncheckedCreateWithoutCreatorInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutCreatorInput | MovieCreateOrConnectWithoutCreatorInput[]
@@ -5549,6 +7173,13 @@ export namespace Prisma {
     connect?: WatchListItemWhereUniqueInput | WatchListItemWhereUniqueInput[]
   }
 
+  export type WatchProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput> | WatchProgressCreateWithoutUserInput[] | WatchProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutUserInput | WatchProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WatchProgressCreateManyUserInputEnvelope
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+  }
+
   export type MovieUncheckedCreateNestedManyWithoutCreatorInput = {
     create?: XOR<MovieCreateWithoutCreatorInput, MovieUncheckedCreateWithoutCreatorInput> | MovieCreateWithoutCreatorInput[] | MovieUncheckedCreateWithoutCreatorInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutCreatorInput | MovieCreateOrConnectWithoutCreatorInput[]
@@ -5561,6 +7192,13 @@ export namespace Prisma {
     connectOrCreate?: WatchListItemCreateOrConnectWithoutUserInput | WatchListItemCreateOrConnectWithoutUserInput[]
     createMany?: WatchListItemCreateManyUserInputEnvelope
     connect?: WatchListItemWhereUniqueInput | WatchListItemWhereUniqueInput[]
+  }
+
+  export type WatchProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput> | WatchProgressCreateWithoutUserInput[] | WatchProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutUserInput | WatchProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WatchProgressCreateManyUserInputEnvelope
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5599,6 +7237,20 @@ export namespace Prisma {
     deleteMany?: WatchListItemScalarWhereInput | WatchListItemScalarWhereInput[]
   }
 
+  export type WatchProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput> | WatchProgressCreateWithoutUserInput[] | WatchProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutUserInput | WatchProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WatchProgressUpsertWithWhereUniqueWithoutUserInput | WatchProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WatchProgressCreateManyUserInputEnvelope
+    set?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    disconnect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    delete?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    update?: WatchProgressUpdateWithWhereUniqueWithoutUserInput | WatchProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WatchProgressUpdateManyWithWhereWithoutUserInput | WatchProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
+  }
+
   export type MovieUncheckedUpdateManyWithoutCreatorNestedInput = {
     create?: XOR<MovieCreateWithoutCreatorInput, MovieUncheckedCreateWithoutCreatorInput> | MovieCreateWithoutCreatorInput[] | MovieUncheckedCreateWithoutCreatorInput[]
     connectOrCreate?: MovieCreateOrConnectWithoutCreatorInput | MovieCreateOrConnectWithoutCreatorInput[]
@@ -5627,6 +7279,20 @@ export namespace Prisma {
     deleteMany?: WatchListItemScalarWhereInput | WatchListItemScalarWhereInput[]
   }
 
+  export type WatchProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput> | WatchProgressCreateWithoutUserInput[] | WatchProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutUserInput | WatchProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WatchProgressUpsertWithWhereUniqueWithoutUserInput | WatchProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WatchProgressCreateManyUserInputEnvelope
+    set?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    disconnect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    delete?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    update?: WatchProgressUpdateWithWhereUniqueWithoutUserInput | WatchProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WatchProgressUpdateManyWithWhereWithoutUserInput | WatchProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
+  }
+
   export type MovieCreategenresInput = {
     set: string[]
   }
@@ -5644,11 +7310,25 @@ export namespace Prisma {
     connect?: WatchListItemWhereUniqueInput | WatchListItemWhereUniqueInput[]
   }
 
+  export type WatchProgressCreateNestedManyWithoutMovieInput = {
+    create?: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput> | WatchProgressCreateWithoutMovieInput[] | WatchProgressUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutMovieInput | WatchProgressCreateOrConnectWithoutMovieInput[]
+    createMany?: WatchProgressCreateManyMovieInputEnvelope
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+  }
+
   export type WatchListItemUncheckedCreateNestedManyWithoutMovieInput = {
     create?: XOR<WatchListItemCreateWithoutMovieInput, WatchListItemUncheckedCreateWithoutMovieInput> | WatchListItemCreateWithoutMovieInput[] | WatchListItemUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: WatchListItemCreateOrConnectWithoutMovieInput | WatchListItemCreateOrConnectWithoutMovieInput[]
     createMany?: WatchListItemCreateManyMovieInputEnvelope
     connect?: WatchListItemWhereUniqueInput | WatchListItemWhereUniqueInput[]
+  }
+
+  export type WatchProgressUncheckedCreateNestedManyWithoutMovieInput = {
+    create?: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput> | WatchProgressCreateWithoutMovieInput[] | WatchProgressUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutMovieInput | WatchProgressCreateOrConnectWithoutMovieInput[]
+    createMany?: WatchProgressCreateManyMovieInputEnvelope
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -5698,6 +7378,20 @@ export namespace Prisma {
     deleteMany?: WatchListItemScalarWhereInput | WatchListItemScalarWhereInput[]
   }
 
+  export type WatchProgressUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput> | WatchProgressCreateWithoutMovieInput[] | WatchProgressUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutMovieInput | WatchProgressCreateOrConnectWithoutMovieInput[]
+    upsert?: WatchProgressUpsertWithWhereUniqueWithoutMovieInput | WatchProgressUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: WatchProgressCreateManyMovieInputEnvelope
+    set?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    disconnect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    delete?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    update?: WatchProgressUpdateWithWhereUniqueWithoutMovieInput | WatchProgressUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: WatchProgressUpdateManyWithWhereWithoutMovieInput | WatchProgressUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
+  }
+
   export type WatchListItemUncheckedUpdateManyWithoutMovieNestedInput = {
     create?: XOR<WatchListItemCreateWithoutMovieInput, WatchListItemUncheckedCreateWithoutMovieInput> | WatchListItemCreateWithoutMovieInput[] | WatchListItemUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: WatchListItemCreateOrConnectWithoutMovieInput | WatchListItemCreateOrConnectWithoutMovieInput[]
@@ -5710,6 +7404,20 @@ export namespace Prisma {
     update?: WatchListItemUpdateWithWhereUniqueWithoutMovieInput | WatchListItemUpdateWithWhereUniqueWithoutMovieInput[]
     updateMany?: WatchListItemUpdateManyWithWhereWithoutMovieInput | WatchListItemUpdateManyWithWhereWithoutMovieInput[]
     deleteMany?: WatchListItemScalarWhereInput | WatchListItemScalarWhereInput[]
+  }
+
+  export type WatchProgressUncheckedUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput> | WatchProgressCreateWithoutMovieInput[] | WatchProgressUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: WatchProgressCreateOrConnectWithoutMovieInput | WatchProgressCreateOrConnectWithoutMovieInput[]
+    upsert?: WatchProgressUpsertWithWhereUniqueWithoutMovieInput | WatchProgressUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: WatchProgressCreateManyMovieInputEnvelope
+    set?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    disconnect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    delete?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    connect?: WatchProgressWhereUniqueInput | WatchProgressWhereUniqueInput[]
+    update?: WatchProgressUpdateWithWhereUniqueWithoutMovieInput | WatchProgressUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: WatchProgressUpdateManyWithWhereWithoutMovieInput | WatchProgressUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutWatchListItemsInput = {
@@ -5742,6 +7450,54 @@ export namespace Prisma {
     upsert?: MovieUpsertWithoutWatchListItemsInput
     connect?: MovieWhereUniqueInput
     update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutWatchListItemsInput, MovieUpdateWithoutWatchListItemsInput>, MovieUncheckedUpdateWithoutWatchListItemsInput>
+  }
+
+  export type UserCreateNestedOneWithoutWatchProgressInput = {
+    create?: XOR<UserCreateWithoutWatchProgressInput, UserUncheckedCreateWithoutWatchProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWatchProgressInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MovieCreateNestedOneWithoutWatchProgressInput = {
+    create?: XOR<MovieCreateWithoutWatchProgressInput, MovieUncheckedCreateWithoutWatchProgressInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutWatchProgressInput
+    connect?: MovieWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutWatchProgressNestedInput = {
+    create?: XOR<UserCreateWithoutWatchProgressInput, UserUncheckedCreateWithoutWatchProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWatchProgressInput
+    upsert?: UserUpsertWithoutWatchProgressInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWatchProgressInput, UserUpdateWithoutWatchProgressInput>, UserUncheckedUpdateWithoutWatchProgressInput>
+  }
+
+  export type MovieUpdateOneRequiredWithoutWatchProgressNestedInput = {
+    create?: XOR<MovieCreateWithoutWatchProgressInput, MovieUncheckedCreateWithoutWatchProgressInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutWatchProgressInput
+    upsert?: MovieUpsertWithoutWatchProgressInput
+    connect?: MovieWhereUniqueInput
+    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutWatchProgressInput, MovieUpdateWithoutWatchProgressInput>, MovieUncheckedUpdateWithoutWatchProgressInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5924,6 +7680,51 @@ export namespace Prisma {
     _max?: NestedEnumWatchListStatusFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type MovieCreateWithoutCreatorInput = {
     id?: string
     title: string
@@ -5935,6 +7736,7 @@ export namespace Prisma {
     videoPath?: string | null
     createdAt?: Date | string
     watchListItems?: WatchListItemCreateNestedManyWithoutMovieInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutCreatorInput = {
@@ -5948,6 +7750,7 @@ export namespace Prisma {
     videoPath?: string | null
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutMovieInput
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutCreatorInput = {
@@ -5987,6 +7790,36 @@ export namespace Prisma {
 
   export type WatchListItemCreateManyUserInputEnvelope = {
     data: WatchListItemCreateManyUserInput | WatchListItemCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WatchProgressCreateWithoutUserInput = {
+    id?: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    movie: MovieCreateNestedOneWithoutWatchProgressInput
+  }
+
+  export type WatchProgressUncheckedCreateWithoutUserInput = {
+    id?: string
+    movieId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WatchProgressCreateOrConnectWithoutUserInput = {
+    where: WatchProgressWhereUniqueInput
+    create: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type WatchProgressCreateManyUserInputEnvelope = {
+    data: WatchProgressCreateManyUserInput | WatchProgressCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -6052,6 +7885,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"WatchListItem"> | Date | string
   }
 
+  export type WatchProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: WatchProgressWhereUniqueInput
+    update: XOR<WatchProgressUpdateWithoutUserInput, WatchProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<WatchProgressCreateWithoutUserInput, WatchProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type WatchProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: WatchProgressWhereUniqueInput
+    data: XOR<WatchProgressUpdateWithoutUserInput, WatchProgressUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WatchProgressUpdateManyWithWhereWithoutUserInput = {
+    where: WatchProgressScalarWhereInput
+    data: XOR<WatchProgressUpdateManyMutationInput, WatchProgressUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WatchProgressScalarWhereInput = {
+    AND?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
+    OR?: WatchProgressScalarWhereInput[]
+    NOT?: WatchProgressScalarWhereInput | WatchProgressScalarWhereInput[]
+    id?: StringFilter<"WatchProgress"> | string
+    userId?: StringFilter<"WatchProgress"> | string
+    movieId?: StringFilter<"WatchProgress"> | string
+    positionSeconds?: FloatFilter<"WatchProgress"> | number
+    durationSeconds?: FloatNullableFilter<"WatchProgress"> | number | null
+    completed?: BoolFilter<"WatchProgress"> | boolean
+    createdAt?: DateTimeFilter<"WatchProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WatchProgress"> | Date | string
+  }
+
   export type UserCreateWithoutMoviesInput = {
     id?: string
     name: string
@@ -6059,6 +7922,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMoviesInput = {
@@ -6068,6 +7932,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMoviesInput = {
@@ -6105,6 +7970,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type WatchProgressCreateWithoutMovieInput = {
+    id?: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutWatchProgressInput
+  }
+
+  export type WatchProgressUncheckedCreateWithoutMovieInput = {
+    id?: string
+    userId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WatchProgressCreateOrConnectWithoutMovieInput = {
+    where: WatchProgressWhereUniqueInput
+    create: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput>
+  }
+
+  export type WatchProgressCreateManyMovieInputEnvelope = {
+    data: WatchProgressCreateManyMovieInput | WatchProgressCreateManyMovieInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutMoviesInput = {
     update: XOR<UserUpdateWithoutMoviesInput, UserUncheckedUpdateWithoutMoviesInput>
     create: XOR<UserCreateWithoutMoviesInput, UserUncheckedCreateWithoutMoviesInput>
@@ -6123,6 +8018,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMoviesInput = {
@@ -6132,6 +8028,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WatchListItemUpsertWithWhereUniqueWithoutMovieInput = {
@@ -6150,6 +8047,22 @@ export namespace Prisma {
     data: XOR<WatchListItemUpdateManyMutationInput, WatchListItemUncheckedUpdateManyWithoutMovieInput>
   }
 
+  export type WatchProgressUpsertWithWhereUniqueWithoutMovieInput = {
+    where: WatchProgressWhereUniqueInput
+    update: XOR<WatchProgressUpdateWithoutMovieInput, WatchProgressUncheckedUpdateWithoutMovieInput>
+    create: XOR<WatchProgressCreateWithoutMovieInput, WatchProgressUncheckedCreateWithoutMovieInput>
+  }
+
+  export type WatchProgressUpdateWithWhereUniqueWithoutMovieInput = {
+    where: WatchProgressWhereUniqueInput
+    data: XOR<WatchProgressUpdateWithoutMovieInput, WatchProgressUncheckedUpdateWithoutMovieInput>
+  }
+
+  export type WatchProgressUpdateManyWithWhereWithoutMovieInput = {
+    where: WatchProgressScalarWhereInput
+    data: XOR<WatchProgressUpdateManyMutationInput, WatchProgressUncheckedUpdateManyWithoutMovieInput>
+  }
+
   export type UserCreateWithoutWatchListItemsInput = {
     id?: string
     name: string
@@ -6157,6 +8070,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     movies?: MovieCreateNestedManyWithoutCreatorInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWatchListItemsInput = {
@@ -6166,6 +8080,7 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWatchListItemsInput = {
@@ -6184,6 +8099,7 @@ export namespace Prisma {
     videoPath?: string | null
     createdAt?: Date | string
     creator: UserCreateNestedOneWithoutMoviesInput
+    watchProgress?: WatchProgressCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutWatchListItemsInput = {
@@ -6197,6 +8113,7 @@ export namespace Prisma {
     videoPath?: string | null
     createdBy: string
     createdAt?: Date | string
+    watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutWatchListItemsInput = {
@@ -6222,6 +8139,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUpdateManyWithoutCreatorNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWatchListItemsInput = {
@@ -6231,6 +8149,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MovieUpsertWithoutWatchListItemsInput = {
@@ -6255,6 +8174,7 @@ export namespace Prisma {
     videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutMoviesNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutWatchListItemsInput = {
@@ -6268,6 +8188,135 @@ export namespace Prisma {
     videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type UserCreateWithoutWatchProgressInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    movies?: MovieCreateNestedManyWithoutCreatorInput
+    watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWatchProgressInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
+    watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWatchProgressInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWatchProgressInput, UserUncheckedCreateWithoutWatchProgressInput>
+  }
+
+  export type MovieCreateWithoutWatchProgressInput = {
+    id?: string
+    title: string
+    overview?: string | null
+    releaseYear: number
+    genres?: MovieCreategenresInput | string[]
+    runtime?: number | null
+    posterUrl?: string | null
+    videoPath?: string | null
+    createdAt?: Date | string
+    creator: UserCreateNestedOneWithoutMoviesInput
+    watchListItems?: WatchListItemCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieUncheckedCreateWithoutWatchProgressInput = {
+    id?: string
+    title: string
+    overview?: string | null
+    releaseYear: number
+    genres?: MovieCreategenresInput | string[]
+    runtime?: number | null
+    posterUrl?: string | null
+    videoPath?: string | null
+    createdBy: string
+    createdAt?: Date | string
+    watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieCreateOrConnectWithoutWatchProgressInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutWatchProgressInput, MovieUncheckedCreateWithoutWatchProgressInput>
+  }
+
+  export type UserUpsertWithoutWatchProgressInput = {
+    update: XOR<UserUpdateWithoutWatchProgressInput, UserUncheckedUpdateWithoutWatchProgressInput>
+    create: XOR<UserCreateWithoutWatchProgressInput, UserUncheckedCreateWithoutWatchProgressInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWatchProgressInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWatchProgressInput, UserUncheckedUpdateWithoutWatchProgressInput>
+  }
+
+  export type UserUpdateWithoutWatchProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movies?: MovieUpdateManyWithoutCreatorNestedInput
+    watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWatchProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
+    watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type MovieUpsertWithoutWatchProgressInput = {
+    update: XOR<MovieUpdateWithoutWatchProgressInput, MovieUncheckedUpdateWithoutWatchProgressInput>
+    create: XOR<MovieCreateWithoutWatchProgressInput, MovieUncheckedCreateWithoutWatchProgressInput>
+    where?: MovieWhereInput
+  }
+
+  export type MovieUpdateToOneWithWhereWithoutWatchProgressInput = {
+    where?: MovieWhereInput
+    data: XOR<MovieUpdateWithoutWatchProgressInput, MovieUncheckedUpdateWithoutWatchProgressInput>
+  }
+
+  export type MovieUpdateWithoutWatchProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseYear?: IntFieldUpdateOperationsInput | number
+    genres?: MovieUpdategenresInput | string[]
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator?: UserUpdateOneRequiredWithoutMoviesNestedInput
+    watchListItems?: WatchListItemUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutWatchProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    overview?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseYear?: IntFieldUpdateOperationsInput | number
+    genres?: MovieUpdategenresInput | string[]
+    runtime?: NullableIntFieldUpdateOperationsInput | number | null
+    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    videoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    watchListItems?: WatchListItemUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieCreateManyCreatorInput = {
@@ -6292,6 +8341,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type WatchProgressCreateManyUserInput = {
+    id?: string
+    movieId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type MovieUpdateWithoutCreatorInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -6303,6 +8362,7 @@ export namespace Prisma {
     videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUpdateManyWithoutMovieNestedInput
+    watchProgress?: WatchProgressUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutCreatorInput = {
@@ -6316,6 +8376,7 @@ export namespace Prisma {
     videoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutMovieNestedInput
+    watchProgress?: WatchProgressUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateManyWithoutCreatorInput = {
@@ -6360,12 +8421,52 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WatchProgressUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movie?: MovieUpdateOneRequiredWithoutWatchProgressNestedInput
+  }
+
+  export type WatchProgressUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    movieId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WatchProgressUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    movieId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WatchListItemCreateManyMovieInput = {
     id?: string
     userId: string
     status?: $Enums.WatchListStatus
     rating?: number | null
     notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WatchProgressCreateManyMovieInput = {
+    id?: string
+    userId: string
+    positionSeconds?: number
+    durationSeconds?: number | null
+    completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6396,6 +8497,36 @@ export namespace Prisma {
     status?: EnumWatchListStatusFieldUpdateOperationsInput | $Enums.WatchListStatus
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WatchProgressUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWatchProgressNestedInput
+  }
+
+  export type WatchProgressUncheckedUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WatchProgressUncheckedUpdateManyWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    positionSeconds?: FloatFieldUpdateOperationsInput | number
+    durationSeconds?: NullableFloatFieldUpdateOperationsInput | number | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

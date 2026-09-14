@@ -9,6 +9,8 @@ import trendingRoutes from "./routes/trendingRoutes.js";
 import videoRoutes from "./routes/videoRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 
+import watchProgressRoutes from "./routes/watchProgressRoutes.js";
+
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 import cookieParser from "cookie-parser";
@@ -33,6 +35,10 @@ app.use(cookieParser());
 app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
+app.use(
+    "/api/watch-progress",
+    watchProgressRoutes
+);
 app.use("/api/videos", videoRoutes);
 app.use("/trending", trendingRoutes);
 

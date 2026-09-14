@@ -141,4 +141,32 @@ export const trendingApi = {
     },
 };
 
+export const watchProgressApi = {
+    // GET /api/watch-progress
+    getContinueWatching: async () => {
+        const res = await api.get("/api/watch-progress");
+
+        return res.data.data;
+    },
+
+    // GET /api/watch-progress/:movieId
+    getMovieProgress: async (movieId) => {
+        const res = await api.get(
+            `/api/watch-progress/${movieId}`
+        );
+
+        return res.data.data;
+    },
+
+    // PUT /api/watch-progress/:movieId
+    saveWatchProgress: async (movieId, payload) => {
+        const res = await api.put(
+            `/api/watch-progress/${movieId}`,
+            payload
+        );
+
+        return res.data.data;
+    },
+};
+
 export default api;
