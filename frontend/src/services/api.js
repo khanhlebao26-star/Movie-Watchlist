@@ -143,8 +143,12 @@ export const trendingApi = {
 
 export const watchProgressApi = {
     // GET /api/watch-progress
-    getContinueWatching: async () => {
-        const res = await api.get("/api/watch-progress");
+    getContinueWatching: async (limit = 20) => {
+        const res = await api.get("/api/watch-progress", {
+            params: {
+                limit,
+            },
+        });
 
         return res.data.data;
     },
@@ -163,6 +167,15 @@ export const watchProgressApi = {
         const res = await api.put(
             `/api/watch-progress/${movieId}`,
             payload
+        );
+
+        return res.data.data;
+    },
+
+    // PATCH /api/watch-progress/:movieId/complete
+    markMovieCompleted: async (movieId) => {
+        const res = await api.patch(
+            `/api/watch-progress/${movieId}/complete`
         );
 
         return res.data.data;

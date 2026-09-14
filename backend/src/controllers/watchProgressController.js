@@ -4,6 +4,13 @@ import { prisma } from "../config/db.js";
 // Get all unfinished movies for Continue Watching
 export const getContinueWatching = async (req, res, next) => {
     try {
+        const requestedLimit = Number(req.query.limit);
+
+        const limit =
+            Number.isFinite(requestedLimit) && requestedLimit > 0
+                ? Math.min(requestedLimit, 50)
+                : 20;
+
         const progressItems = await prisma.watchProgress.findMany({
             where: {
                 userId: req.user.id,
@@ -12,12 +19,16 @@ export const getContinueWatching = async (req, res, next) => {
                     gt: 0,
                 },
             },
+
             include: {
                 movie: true,
             },
+
             orderBy: {
                 updatedAt: "desc",
             },
+
+            take: limit,
         });
 
         const movies = progressItems.map((item) => {
@@ -171,3 +182,51 @@ export const saveWatchProgress = async (req, res, next) => {
         next(error);
     }
 };
+
+// PATCH /watch-progress/:movieId/completed
+// Mark movie as watched
+export const markMovieCompleted = async (req, res, next) => {
+    try {
+        const { movieId } = req.params;
+        
+        const progress = await prisma.watchProgress.findUnique({
+            where: {
+                userId_movieId: {
+                    userId: req.user.id,
+                    movieId,
+                },
+            },
+        });
+
+        if (!progress) {
+            return res.status(404).json({
+                status: "error",
+                message: "Watch progress not found",
+            });
+        }
+
+        const updatedProgress =
+            await prisma.watchProgress.update({
+                where: {
+                    userId_movieId: {
+                        userId: req.user.id,
+                        movieId
+                    },
+                },
+
+                data: {
+                    completed: true,
+                },
+            });
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                progress: updatedProgress
+            },
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+

@@ -23,7 +23,7 @@ export default function ContinueWatching() {
             try {
                 setLoading(true);
 
-                const result = await watchProgressApi.getContinueWatching();
+                const result = await watchProgressApi.getContinueWatching(3);
 
                 if (active) {
                     setMovies(result.movies || []);
@@ -68,6 +68,13 @@ export default function ContinueWatching() {
                         Continue Watching
                     </h2>
                 </div>
+
+                <Link
+                        to="/continue-watching"
+                        className="continue-watching-view-all"
+                    >
+                        View All →
+                </Link>
 
                 <div className="continue-watching-list">
                     {movies.map((item) => (

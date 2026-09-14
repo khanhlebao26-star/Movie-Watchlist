@@ -3,6 +3,7 @@ import express from "express";
 import {
     getContinueWatching,
     getMovieProgress,
+    markMovieCompleted,
     saveWatchProgress,
 } from "../controllers/watchProgressController.js";
 
@@ -17,5 +18,7 @@ router.get("/", getContinueWatching);
 router.get("/:movieId", getMovieProgress);
 
 router.put("/:movieId", saveWatchProgress);
+
+router.patch("/:movieId/complete", markMovieCompleted);
 
 export default router;

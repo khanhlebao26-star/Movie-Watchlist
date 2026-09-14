@@ -142,6 +142,15 @@ function AppLayout() {
                   </ProtectedRoute>
                 }
               />
+
+              {/* <Route
+                path="/continue-watching"
+                element={
+                    <ProtectedRoute>
+                        <ContinueWatchingPage />
+                    </ProtectedRoute>
+                }
+              /> */}
       </Routes>
 
       {!isAuthPage && <Footer />}

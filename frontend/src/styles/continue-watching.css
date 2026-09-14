@@ -5,7 +5,28 @@
 }
 
 .continue-watching-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
     margin-bottom: 40px;
+}
+
+.continue-watching-view-all {
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.continue-watching-view-all:hover {
+    color: var(--primary-hover);
+    transform: translateX(3px);
 }
 
 .continue-watching-label {
