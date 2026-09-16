@@ -173,7 +173,7 @@ export const watchProgressApi = {
     },
 
     // PATCH /api/watch-progress/:movieId/complete
-    markMovieCompleted: async (movieId) => {
+    markCompleted: async (movieId) => {
         const res = await api.patch(
             `/api/watch-progress/${movieId}/complete`
         );

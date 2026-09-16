@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import Footer from "./components/Footer";
 import { ToastProvider } from "./context/ToastProvider";
 import { WatchlistProvider } from "./context/WatchlistProvider";
+import ContinueWatchingPage from "./pages/ContinueWatchingPage";
 import CreateMovie from "./pages/CreateMovie";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -143,14 +144,14 @@ function AppLayout() {
                 }
               />
 
-              {/* <Route
-                path="/continue-watching"
-                element={
-                    <ProtectedRoute>
-                        <ContinueWatchingPage />
-                    </ProtectedRoute>
-                }
-              /> */}
+              <Route
+                  path="/continue-watching"
+                  element={
+                      <ProtectedRoute>
+                          <ContinueWatchingPage />
+                      </ProtectedRoute>
+                  }
+              />
       </Routes>
 
       {!isAuthPage && <Footer />}

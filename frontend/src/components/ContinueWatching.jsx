@@ -60,21 +60,23 @@ export default function ContinueWatching() {
             <div className="container">
 
                 <div className="continue-watching-header">
-                    <span className="continue-watching-label">
-                        FOR YOU
-                    </span>
+                    <div>
+                        <span className="continue-watching-label">
+                            FOR YOU
+                        </span>
 
-                    <h2 className="continue-watching-title">
-                        Continue Watching
-                    </h2>
-                </div>
+                        <h2 className="continue-watching-title">
+                            Continue Watching
+                        </h2>
+                    </div>
 
-                <Link
+                    <Link
                         to="/continue-watching"
                         className="continue-watching-view-all"
                     >
                         View All →
-                </Link>
+                    </Link>
+                </div>
 
                 <div className="continue-watching-list">
                     {movies.map((item) => (
@@ -98,7 +100,7 @@ export default function ContinueWatching() {
                                     {item.remainingMinutes} min left
                                 </p>
 
-                                <div className="continue-watching-progess">
+                                <div className="continue-watching-progress">
                                     <div 
                                         className="continue-watching-progress-bar"
                                         style={{
