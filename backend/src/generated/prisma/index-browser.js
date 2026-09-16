@@ -152,6 +152,17 @@ exports.Prisma.WatchListItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.WatchProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  positionSeconds: 'positionSeconds',
+  durationSeconds: 'durationSeconds',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -176,7 +187,8 @@ exports.WatchListStatus = exports.$Enums.WatchListStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Movie: 'Movie',
-  WatchListItem: 'WatchListItem'
+  WatchListItem: 'WatchListItem',
+  WatchProgress: 'WatchProgress'
 };
 
 /**
