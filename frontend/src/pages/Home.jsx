@@ -1,4 +1,5 @@
 import ContinueWatching from "../components/ContinueWatching";
+import FeaturedGenres from "../components/FeaturedGenres";
 import HomeHero from "../components/HomeHero";
 import HomeMovies from "../components/HomeMovies";
 import TrendingPeople from "../components/TrendingPeople";
@@ -12,6 +13,8 @@ export default function Home({ search, genre }) {
             <WeeklyRanking />
 
             <ContinueWatching />
+
+            <FeaturedGenres />
 
             <HomeMovies
                 search={search}
