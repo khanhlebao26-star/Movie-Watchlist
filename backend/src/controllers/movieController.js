@@ -9,6 +9,7 @@ const getMovies = async (req, res, next) => {
         
         // Build filter
         const where = {};
+        
         if (search) {
             where.title = { contains: search, mode: "insensitive" };
         }
@@ -109,15 +110,16 @@ const updateMovie = async (req, res, next) => {
             });
         }
 
-        if (movie.createdBy !== req.user.id) {
-            return res.status(403).json({
-                status: "error",
-                message: "Not allowed to modify this movie",
-            });
-        }
+        // if (movie.createdBy !== req.user.id) {
+        //     return res.status(403).json({
+        //         status: "error",
+        //         message: "Not allowed to modify this movie",
+        //     });
+        // }
 
         // Build update data only with provided fields
         const updateData = {};
+
         if (title !== undefined) updateData.title = title;
         if (overview !== undefined) updateData.overview = overview;
         if (releaseYear !== undefined) updateData.releaseYear = releaseYear;
@@ -155,12 +157,12 @@ const deleteMovie = async (req, res, next) => {
             });
         }
 
-        if (movie.createdBy !== req.user.id) {
-            return res.status(403).json({
-                status: "error",
-                message: "Not allowed to delete this movie",
-            });
-        }
+        // if (movie.createdBy !== req.user.id) {
+        //     return res.status(403).json({
+        //         status: "error",
+        //         message: "Not allowed to delete this movie",
+        //     });
+        // }
 
         await prisma.movie.delete({
             where: { id: req.params.id },
@@ -255,5 +257,6 @@ export {
     getMovieById,
     getMovieCast,
     getMovies,
-    updateMovie,
+    updateMovie
 };
+

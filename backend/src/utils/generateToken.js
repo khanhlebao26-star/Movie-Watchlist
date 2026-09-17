@@ -1,16 +1,20 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 
-export const generateToken = (userId, res ) => {
+export const generateToken = (user, res ) => {
     // Check JWT_SECRET exists
     if (!process.env.JWT_SECRET) {
         throw new Error("JWT_SECRET is missing in environment variables");
     }
 
-    const payload = {id: userId};
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN || "7d",
-    });
+    const payload = {id: user.id, role: user.role,};
+    const token = jwt.sign(
+        payload, 
+        process.env.JWT_SECRET, 
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+        }
+    );
 
     res.cookie("jwt", token, {
         httpOnly: true,

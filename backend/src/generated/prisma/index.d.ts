@@ -38,7 +38,15 @@ export type WatchProgress = $Result.DefaultSelection<Prisma.$WatchProgressPayloa
  * Enums
  */
 export namespace $Enums {
-  export const WatchListStatus: {
+  export const UserRole: {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const WatchListStatus: {
   PLANNED: 'PLANNED',
   WATCHING: 'WATCHING',
   COMPLETED: 'COMPLETED',
@@ -48,6 +56,10 @@ export namespace $Enums {
 export type WatchListStatus = (typeof WatchListStatus)[keyof typeof WatchListStatus]
 
 }
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
 
 export type WatchListStatus = $Enums.WatchListStatus
 
@@ -1289,6 +1301,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
   }
 
@@ -1297,6 +1310,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
   }
 
@@ -1305,6 +1319,7 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    role: number
     createdAt: number
     _all: number
   }
@@ -1315,6 +1330,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1323,6 +1339,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1331,6 +1348,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    role?: true
     createdAt?: true
     _all?: true
   }
@@ -1412,6 +1430,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role: $Enums.UserRole
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1437,6 +1456,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    role?: boolean
     createdAt?: boolean
     movies?: boolean | User$moviesArgs<ExtArgs>
     watchListItems?: boolean | User$watchListItemsArgs<ExtArgs>
@@ -1449,6 +1469,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    role?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1457,6 +1478,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    role?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1465,10 +1487,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    role?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movies?: boolean | User$moviesArgs<ExtArgs>
     watchListItems?: boolean | User$watchListItemsArgs<ExtArgs>
@@ -1490,6 +1513,7 @@ export namespace Prisma {
       name: string
       email: string
       password: string
+      role: $Enums.UserRole
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1921,6 +1945,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'UserRole'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -5936,6 +5961,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    role: 'role',
     createdAt: 'createdAt'
   };
 
@@ -6030,6 +6056,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole[]'
+   */
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -6103,6 +6143,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     movies?: MovieListRelationFilter
     watchListItems?: WatchListItemListRelationFilter
@@ -6114,6 +6155,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     movies?: MovieOrderByRelationAggregateInput
     watchListItems?: WatchListItemOrderByRelationAggregateInput
@@ -6128,6 +6170,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     movies?: MovieListRelationFilter
     watchListItems?: WatchListItemListRelationFilter
@@ -6139,6 +6182,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6153,6 +6197,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -6401,6 +6446,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
@@ -6412,6 +6458,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
@@ -6423,6 +6470,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
@@ -6434,6 +6482,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
@@ -6445,6 +6494,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
   }
 
@@ -6453,6 +6503,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6461,6 +6512,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6727,6 +6779,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6773,6 +6832,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6781,6 +6841,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6789,6 +6850,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6808,6 +6870,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -7205,6 +7277,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -7514,6 +7590,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -7551,6 +7634,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -7920,6 +8013,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
     watchProgress?: WatchProgressCreateNestedManyWithoutUserInput
@@ -7930,6 +8024,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
     watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutUserInput
@@ -8016,6 +8111,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
     watchProgress?: WatchProgressUpdateManyWithoutUserNestedInput
@@ -8026,6 +8122,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
     watchProgress?: WatchProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -8068,6 +8165,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieCreateNestedManyWithoutCreatorInput
     watchProgress?: WatchProgressCreateNestedManyWithoutUserInput
@@ -8078,6 +8176,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
     watchProgress?: WatchProgressUncheckedCreateNestedManyWithoutUserInput
@@ -8137,6 +8236,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUpdateManyWithoutCreatorNestedInput
     watchProgress?: WatchProgressUpdateManyWithoutUserNestedInput
@@ -8147,6 +8247,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
     watchProgress?: WatchProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -8196,6 +8297,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemCreateNestedManyWithoutUserInput
@@ -8206,6 +8308,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    role?: $Enums.UserRole
     createdAt?: Date | string
     movies?: MovieUncheckedCreateNestedManyWithoutCreatorInput
     watchListItems?: WatchListItemUncheckedCreateNestedManyWithoutUserInput
@@ -8265,6 +8368,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUpdateManyWithoutUserNestedInput
@@ -8275,6 +8379,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movies?: MovieUncheckedUpdateManyWithoutCreatorNestedInput
     watchListItems?: WatchListItemUncheckedUpdateManyWithoutUserNestedInput
