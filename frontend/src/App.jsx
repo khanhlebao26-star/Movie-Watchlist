@@ -129,7 +129,7 @@ function AppLayout() {
               <Route
                 path="/movies/new"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute adminOnly>
                     <CreateMovie />
                   </ProtectedRoute>
                 }
@@ -138,7 +138,7 @@ function AppLayout() {
               <Route
                 path="/movies/:id/edit"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute adminOnly>
                     <CreateMovie />
                   </ProtectedRoute>
                 }

@@ -10,6 +10,8 @@ export default function Navbar({
 }) {
     const { user, logout } = useAuth();
 
+    const isAdmin = user?.role === "ADMIN";
+
     const handleLogout = async () => {
         try {
             await logout();
@@ -27,42 +29,43 @@ export default function Navbar({
                     Movie<span className="logo-accent">List</span>
                 </Link>
 
-            <div className="navbar-search-box">
-                <div className="navbar-genre">
-                    <select
-                        value={genre}
-                        onChange={(e) =>
-                            onGenreChange(e.target.value)
-                        }
-                    >
-                        <option value="">All Genres</option>
-                        <option value="Action">Action</option>
-                        <option value="Adventure">Adventure</option>
-                        <option value="Animation">Animation</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Crime">Crime</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Horror">Horror</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Thriller">Thriller</option>
-                    </select>
-                </div>
+                {/* Search */}
+                <div className="navbar-search-box">
+                    <div className="navbar-genre">
+                        <select
+                            value={genre}
+                            onChange={(e) =>
+                                onGenreChange(e.target.value)
+                            }
+                        >
+                            <option value="">All Genres</option>
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="Thriller">Thriller</option>
+                        </select>
+                    </div>
 
-                <div className="navbar-search-input">
-                    <input
-                        type="text"
-                        placeholder="Search movies..."
-                        value={search}
-                        onChange={(e) => onSearchChange(e.target.value)}
-                    />
-                    <button type="button" className="navbar-search-icon">
-                        <img src={searchIcon} alt="Search" />
-                    </button>
+                    <div className="navbar-search-input">
+                        <input
+                            type="text"
+                            placeholder="Search movies..."
+                            value={search}
+                            onChange={(e) => onSearchChange(e.target.value)}
+                        />
+                        <button type="button" className="navbar-search-icon">
+                            <img src={searchIcon} alt="Search" />
+                        </button>
 
+                    </div>
                 </div>
-            </div>
 
                 {/* Navigation */}
                 <nav className="nav-links">
@@ -87,7 +90,7 @@ export default function Navbar({
                         </NavLink>
                     )}
 
-                    {user && (
+                    {isAdmin && (
                         <NavLink
                             to="/movies/new"
                             className={({ isActive }) =>
