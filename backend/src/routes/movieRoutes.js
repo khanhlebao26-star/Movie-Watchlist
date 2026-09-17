@@ -11,6 +11,7 @@ import {
 
 import { createMovieSchema, updateMovieSchema } from "../validators/movieValidators.js";
 
+import { adminMiddleware } from "../middleware/adminMiddleware.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 
@@ -22,10 +23,10 @@ router.get("/:id/cast", getMovieCast);
 
 router.get("/:id", getMovieById);
 
-router.post("/", authMiddleware, validateRequest(createMovieSchema), createMovie);
+router.post("/", authMiddleware, adminMiddleware, validateRequest(createMovieSchema), createMovie);
 
-router.put("/:id", authMiddleware, validateRequest(updateMovieSchema), updateMovie);
+router.put("/:id", authMiddleware, adminMiddleware, validateRequest(updateMovieSchema), updateMovie);
 
-router.delete("/:id", authMiddleware, deleteMovie);
+router.delete("/:id", authMiddleware, adminMiddleware, deleteMovie);
 
 export default router;

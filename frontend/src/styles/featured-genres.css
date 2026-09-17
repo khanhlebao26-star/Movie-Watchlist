@@ -1,0 +1,128 @@
+.featured-genres {
+    width: 100%;
+    padding: 80px 0;
+    background: var(--bg);
+}
+
+.featured-genres-header {
+    margin-bottom: 40px;
+}
+
+.featured-genres-label {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.featured-genres-title {
+    margin: 0 0 10px;
+    color: var(--text);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.featured-genres-description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.featured-genres-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.featured-genre-card {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+
+    min-height: 110px;
+    padding: 28px 44px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.featured-genre-card:hover {
+    transform: translateY(-3px);
+    border-color: #3f3f46;
+    background: var(--surface-hover);
+}
+
+.featured-genre-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    color: var(--text);
+    font-size: 30px;
+}
+
+.featured-genre-content {
+    min-width: 0;
+}
+
+.featured-genre-name {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.featured-genre-count {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+    .featured-genres-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .featured-genre-card {
+        padding: 24px 28px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    .featured-genres {
+        padding: 60px 0;
+    }
+
+    .featured-genres-title {
+        font-size: 32px;
+    }
+
+    .featured-genres-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .featured-genre-card {
+        min-height: 90px;
+        padding: 22px 24px;
+    }
+}
