@@ -144,8 +144,10 @@ export default function MovieDetail() {
         );
     }
 
-    const isOwner =
-        user && movie.createdBy === user.id;
+    // const isOwner =
+    //     user && movie.createdBy === user.id;
+
+    const isAdmin = user?.role === "ADMIN";
 
     const totalCastSlides = Math.ceil(
         cast.length / castPerSlide
@@ -278,7 +280,7 @@ export default function MovieDetail() {
                                     : "+ Add to Watchlist"}
                             </button>
 
-                            {isOwner && (
+                            {isAdmin && (
                                 <Link
                                     to={`/movies/${movie.id}/edit`}
                                     className="btn btn-secondary"
@@ -287,7 +289,7 @@ export default function MovieDetail() {
                                 </Link>
                             )}
 
-                            {isOwner && (
+                            {isAdmin && (
                                 <button
                                     type="button"
                                     className="btn btn-danger"
