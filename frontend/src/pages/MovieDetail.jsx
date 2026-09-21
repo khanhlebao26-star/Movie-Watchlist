@@ -3,12 +3,19 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useAuth } from "../context/useAuth";
 import { useToast } from "../context/useToast";
+import { useWatchlist } from "../context/useWatchlist";
 import { movieApi, watchlistApi } from "../services/api";
+
 
 export default function MovieDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
+
+    const { 
+        isMovieInWatchlist,
+        addMovieToWatchlist,
+    } = useWatchlist();
 
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -19,6 +26,10 @@ export default function MovieDetail() {
     const { showToast } = useToast();
 
     const [deleting, setDeleting] = useState(false);
+
+    const addedToWatchlist = movie
+        ? isMovieInWatchlist(movie.id)
+        : false;
 
     const [cast, setCast] = useState([]);
     const [castLoading, setCastLoading] = useState(true);
@@ -74,6 +85,8 @@ export default function MovieDetail() {
             await watchlistApi.addToWatchlist({
                 movieId: movie.id,
             });
+
+            addMovieToWatchlist(movie.id);
 
             showToast("Movie added to your watchlist.", "success");
         } catch (err) {
@@ -273,11 +286,16 @@ export default function MovieDetail() {
                                 type="button"
                                 className="btn btn-primary movie-detail-watchlist"
                                 onClick={handleAddToWatchlist}
-                                disabled={addingToWatchlist}
+                                disabled={
+                                    addingToWatchlist || 
+                                    addedToWatchlist
+                                }
                             >
                                 {addingToWatchlist
                                     ? "Adding..."
-                                    : "+ Add to Watchlist"}
+                                    : addedToWatchlist
+                                        ? "✓ Added to Watchlist"
+                                        : "+ Add to Watchlist"}
                             </button>
 
                             {isAdmin && (

@@ -7,6 +7,14 @@ const STATUS_VALUES = [
     "DROPPED",
 ];
 
+const ratingSchema = z.coerce
+        .number({
+            message: "Rating must be a number",
+        })
+        .int("Rating must be an integer")
+        .min(1, "Rating must be between 1 and 10")
+        .max(10, "Rating must be between 1 and 10");
+
 /**
  * Add movie to watchlist
  */
@@ -22,14 +30,8 @@ const addToWatchlistSchema = z.object({
         })
         .optional(),
 
-    rating: z
-        .coerce
-        .number({
-            message: "Rating must be a number",
-        })
-        .int("Rating must be an integer")
-        .min(1, "Rating must be between 1 and 10")
-        .max(10, "Rating must be between 1 and 10")
+    rating: ratingSchema
+        .nullable()
         .optional(),
 
     notes: z
@@ -50,14 +52,8 @@ const updateWatchlistItemSchema = z.object({
         })
         .optional(),
 
-    rating: z
-        .coerce
-        .number({
-            message: "Rating must be a number",
-        })
-        .int("Rating must be an integer")
-        .min(1, "Rating must be between 1 and 10")
-        .max(10, "Rating must be between 1 and 10")
+    rating: ratingSchema
+        .nullable()
         .optional(),
 
     notes: z

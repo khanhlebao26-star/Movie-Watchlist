@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useWatchlist } from "../context/useWatchlist";
 import { watchlistApi } from "../services/api";
 
 export default function Watchlist() {
     const [watchlist, setWatchlist] = useState([]);
+
+    const {
+        removeMovieFromWatchlist,
+    } = useWatchlist();
 
     const [filter, setFilter] = useState("ALL");
 
@@ -94,7 +99,7 @@ export default function Watchlist() {
     DELETE WATCHLIST ITEM
     ===================================================== */
 
-    const handleRemove = async (id) => {
+    const handleRemove = async (id, movieId) => {
         const confirmed = window.confirm(
             "Remove this movie from your watchlist?"
         );
@@ -113,6 +118,8 @@ export default function Watchlist() {
                     (item) => item.id !== id
                 )
             );
+
+            removeMovieFromWatchlist(movieId);
         } catch (err) {
             setError(
                 err.message ||
@@ -663,7 +670,8 @@ export default function Watchlist() {
                                                     }
                                                     onClick={() =>
                                                         handleRemove(
-                                                            item.id
+                                                            item.id,
+                                                            item.movieId
                                                         )
                                                     }
                                                 >
