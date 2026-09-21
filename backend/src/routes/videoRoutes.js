@@ -1,8 +1,10 @@
 import express from "express";
-import { streamVideo } from "../controllers/videoController.js";
+import { getVideoUrl } from "../controllers/videoController.js";
+
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/:movieId", streamVideo);
+router.get("/:movieId", authMiddleware, getVideoUrl);
 
 export default router;

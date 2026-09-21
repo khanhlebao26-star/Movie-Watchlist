@@ -1,23 +1,26 @@
-import "dotenv/config";
 import { prisma } from "../config/db.js";
+import { supabaseAdmin } from "../config/supabase.js";
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
 const BUCKET_NAME = "movies";
+const SIGNED_URL_TTL_SECONDS = 4 * 60 * 60;
 
-export const streamVideo = async (req, res) => {
+export const getVideoUrl = async (req, res, next) => {
     try {
-        const movieId = req.params.movieId;
 
         // Tìm movie trong database
         const movie = await prisma.movie.findUnique({
             where: {
-                id: movieId,
+                id: req.params.movieId,
+            },
+            select: {
+                videoPath: true,
             },
         });
 
         //Không tìm thấy movie
         if (!movie) {
             return res.status(404).json({
+                status: "error",
                 message: "Movie not found",
             });
         }
@@ -25,93 +28,35 @@ export const streamVideo = async (req, res) => {
         // Movie chưa có video
         if(!movie.videoPath) {
             return res.status(404).json({
+                status: "error",
                 message: "Video is not available for this movie",
             });
         }
 
-        // Lấy filename từ database
-        const filename = movie.videoPath;
+        const {data, error} = await supabaseAdmin.storage
+            .from(BUCKET_NAME)
+            .createSignedUrl(
+                movie.videoPath,
+                SIGNED_URL_TTL_SECONDS
+            );
 
-        // Tạo URL Supabase Storage
-        const videoUrl =
-            `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${encodeURIComponent(filename)}`;
-        
-        // Lấy Range từ Browser
-        const range = req.headers.range;
-
-        // Header gửi tới Supabase
-        const headers = {};
-
-        if (range) {
-            headers.Range = range;
+        if (error || !data?.signedUrl) {
+            const storageError = new Error(
+                "Failed to create video URL"
+            );
+            storageError.statusCode = 502;
+            throw storageError;
         }
 
-        // Request tới Supabase Storage
-        const response = await fetch(videoUrl, {
-            headers,
+        res.status(200).json({
+            status: "success",
+            data: {
+                url: data.signedUrl,
+                expiresIn: SIGNED_URL_TTL_SECONDS,
+            },
         });
 
-        // Video không tồn tại
-        if (response.status === 404) {
-            return res.status(404).json({
-                message: "Video not found in storage",
-            });
-        }
-
-        // Lỗi từ Supabase
-        if (!response.ok) {
-            return res.status(response.status).send(
-                "Failed to fetch video from storage"
-            );
-        }
-
-        // Giữ nguyên status của Supabase
-        res.status(response.status);
-
-        // Content-Type
-        if (response.headers.get("content-type")) {
-            res.setHeader(
-                "Content-Type",
-                response.headers.get("content-type")
-            );
-        }
-
-        // Content-Length
-        if (response.headers.get("content-length")) {
-            res.setHeader(
-                "Content-Length",
-                response.headers.get("content-length")
-            );
-        }
-
-        // Content-Range
-        if (response.headers.get("content-range")) {
-            res.setHeader(
-                "Content-Range",
-                response.headers.get("content-range")
-            );
-        }
-
-        // Browser biết server hỗ trợ Range
-        res.setHeader("Accept-Ranges", "bytes");
-
-        // Stream:
-        // Supabase → Express → Browser
-        if (response.body) {
-            for await (const chunk of response.body) {
-                res.write(chunk);
-            }
-
-            res.end();
-        }
-
     } catch (error) {
-        console.error("Video streaming error:", error);
-
-        if (!res.headersSent) {
-            res.status(500).json({
-                message: "Failed to stream video",
-            });
-        }
+        next(error);
     }
 };

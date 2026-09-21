@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "../context/useAuth";
-import { watchProgressApi } from "../services/api";
+import { videoApi, watchProgressApi } from "../services/api";
 
-const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5001";
+// const API_URL =
+//     import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export default function VideoPlayer({ movieId  }) {
     const videoRef = useRef(null);
@@ -12,49 +12,85 @@ export default function VideoPlayer({ movieId  }) {
 
     const { user } = useAuth();
 
-    // if (!movieId ) {
-    //     return (
-    //         <div className="video-player-empty">
-    //             Video is not available.
-    //         </div>
-    //     );
-    // }
+    const [videoUrl, setVideoUrl] = useState("");
+    const [videoLoading, setVideoLoading] = useState(true);
+    const [videoError, setVideoError] = useState("");
+    const resumeAt = useRef(0);
 
-    const videoUrl = movieId
-        ? `${API_URL}/api/videos/${encodeURIComponent(movieId)}`
-        : "";
-
-    // Load previous progress
     useEffect(() => {
         let active = true;
 
-        const loadProgress = async () => {
-            if (!user) {
+        const loadVideo = async () => {
+            if (!user || !movieId) {
+                setVideoLoading(false);
+                setVideoUrl("");
                 return;
             }
 
             try {
-                const result = await watchProgressApi.getMovieProgress(movieId);
 
-                const progress = result.progress;
+                setVideoLoading(true);
+                setVideoError("");
+                setVideoUrl("");
 
-                if (active && progress && videoRef.current) {
-                    videoRef.current.currentTime = progress.positionSeconds;
+                const [videoResult, progressResult] =
+                    await Promise.all([
+                        videoApi.getVideoUrl(movieId),
+                        watchProgressApi
+                            .getMovieProgress(movieId)
+                            .catch((error) => {
+                                console.log(
+                                    "Failed to load watch progress:",
+                                    error
+                                );
+
+                                return {
+                                    progress: null,
+                                };
+                            }),
+                    ]);
+
+                if (!active) {
+                    return;
                 }
+
+                resumeAt.current =
+                    progressResult.progress
+                        ?.positionSeconds || 0;
+                
+                        setVideoUrl(videoResult.url);
+
             } catch (error) {
-                console.error(
-                    "Failed to load watch progress:",
-                    error
-                );
+                if (active) {
+                    setVideoError(
+                        error.message || "Failed to load video."
+                    );
+                }
+            } finally {
+                if (active) {
+                    setVideoLoading(false);
+                }
             }
         };
-
-        loadProgress();
+        
+        loadVideo();
 
         return () => {
             active = false;
         };
     }, [movieId, user]);
+
+    const handleLoadedMetadata = () => {
+        const video = videoRef.current;
+
+        if (
+            video &&
+            resumeAt.current > 0 &&
+            resumeAt.current < video.duration
+        ) {
+            video.currentTime = resumeAt.current;
+        }
+    };
 
     // Save progress
     const saveProgress = async (force = false) => {
@@ -108,6 +144,23 @@ export default function VideoPlayer({ movieId  }) {
         );
     }
 
+    if (videoLoading) {
+        return (
+            <div className="video-player-empty">
+                Loading video...
+            </div>
+        );
+    }
+
+    if (videoError || !videoUrl) {
+        return (
+            <div className="video-player-empty">
+                {videoError || "video is not available"}
+            </div>
+        );
+    }
+
+
     return (
         <div className="video-player">
             <video
@@ -116,6 +169,7 @@ export default function VideoPlayer({ movieId  }) {
                 controls
                 preload="metadata"
                 src={videoUrl}
+                onLoadedMetadata={handleLoadedMetadata}
                 onTimeUpdate={() => saveProgress(false)}
                 onPause={() => saveProgress(true)}
                 onEnded={() => saveProgress(true)}
