@@ -33,7 +33,7 @@ const register = async (req, res) => {
     });
 
     // Generate JWT token  
-    const token = generateToken(user, res);
+    generateToken(user, res);
 
     res.status(201).json({
         status: "success",
@@ -44,7 +44,6 @@ const register = async (req, res) => {
                 email: user.email,
                 role: user.role,
             },
-            token,
         },
     });
 };
@@ -79,7 +78,7 @@ const login = async (req, res) => {
     }
 
     // Generate JWT token  
-    const token = generateToken(user, res);
+    generateToken(user, res);
 
     res.status(200).json({
         status: "success",
@@ -90,7 +89,6 @@ const login = async (req, res) => {
                 email: user.email,
                 role: user.role,
             },
-            token,
         },
     });
 };
@@ -98,7 +96,12 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     res.cookie("jwt", "", {
         httpOnly: true,
-        expires: new Date(0)
+        secure: process.env.NODE_ENV === "producttion",
+        sameSite:
+            process.env.NODE_ENV === "producttion"
+                ? "strict"
+                : "lax",
+        // expires: new Date(0)
     });
     res.status(200).json({
         status: "success",
