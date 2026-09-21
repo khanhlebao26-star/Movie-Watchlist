@@ -128,9 +128,13 @@ export const watchlistApi = {
 };
 
 export const videoApi = {
-    getVideoUrl: (movieId) => {
-        return `${API_URL}/api/videos/${encodeURIComponent(movieId)}`;
+    getVideoUrl: async (movieId) => {
+        const res = await api.get(`/api/videos/${encodeURIComponent(movieId)}`
+        );
+
+        return res.data.data;
     },
+    
 };
 
 export const trendingApi = {

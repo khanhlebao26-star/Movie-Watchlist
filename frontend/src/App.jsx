@@ -114,7 +114,11 @@ function AppLayout() {
 
               <Route
                   path="/movies/:id/watch"
-                  element={<WatchMovie />}
+                  element={
+                    <ProtectedRoute>
+                      <WatchMovie />
+                    </ProtectedRoute>
+                  }
               />
 
               <Route
