@@ -22,5 +22,5 @@ export const generateToken = (user, res ) => {
         sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
         maxAge: (1000 * 60 * 60 * 24) * 7
     });
-    return token;
+    // return token;
 };
