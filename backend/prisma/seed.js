@@ -16,7 +16,7 @@ const main = async () => {
 
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
-    const adminName = process.env.ADMIN_NAME;
+    const adminName = process.env.ADMIN_NAME || "Movie Admin";
 
     if (!adminEmail || !adminPassword) {
       throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required");
