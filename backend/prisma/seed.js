@@ -14,21 +14,35 @@ const prisma = new PrismaClient({
 const main = async () => {
     console.log("Seeding admin account...");
 
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminName = process.env.ADMIN_NAME;
+
+    if (!adminEmail || !adminPassword) {
+      throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required");
+    }
+
+    if (adminPassword.length < 12) {
+      throw new Error("ADMIN_PASSWORD must be at least 12 characters");
+    }
+
     const hashedPassword = await bcrypt.hash(
-      "Admin123!",
-      10
+      adminPassword,
+      12
     );
 
     const admin = await prisma.user.upsert({
       where: {
-        email: "admin@movieapp.com",
+        email: adminEmail.toLowerCase(),
       },
       update: {
+        name: adminName,
+        password: hashedPassword,
         role: "ADMIN",
       },
       create: {
-        name: "Movie Admin",
-        email: "admin@movieapp.com",
+        name: adminName,
+        email: adminEmail.toLowerCase(),
         password: hashedPassword,
         role: "ADMIN",
       },
