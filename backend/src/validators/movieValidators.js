@@ -57,6 +57,31 @@ const createMovieSchema = z.object({
         .optional(),
 });
 
+const movieQuerySchema = z.object({
+    page: z.coerce
+        .number()
+        .int()
+        .min(1)
+        .default(1),
+
+    limit: z.coerce
+        .number()
+        .int()
+        .min(1)
+        .max(50)
+        .default(10),
+
+    search: z.string()
+        .trim()
+        .max(100)
+        .optional(),
+
+    genre: z.string()
+        .trim()
+        .max(50)
+        .optional(),
+});
+
 /**
  * Validation schema for updating a movie
  * All fields are optional, but if provided, must meet validation rules
@@ -120,4 +145,9 @@ const updateMovieSchema = z.object({
         .optional(),
 });
 
-export { createMovieSchema, updateMovieSchema };
+export {
+    createMovieSchema,
+    movieQuerySchema,
+    updateMovieSchema
+};
+

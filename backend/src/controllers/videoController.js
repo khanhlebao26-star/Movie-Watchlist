@@ -1,7 +1,6 @@
 import { prisma } from "../config/db.js";
-import { supabaseAdmin } from "../config/supabase.js";
+import { supabaseAdmin, supabaseBucket } from "../config/supabase.js";
 
-const BUCKET_NAME = "movies";
 const SIGNED_URL_TTL_SECONDS = 4 * 60 * 60;
 
 export const getVideoUrl = async (req, res, next) => {
@@ -34,7 +33,7 @@ export const getVideoUrl = async (req, res, next) => {
         }
 
         const {data, error} = await supabaseAdmin.storage
-            .from(BUCKET_NAME)
+            .from(supabaseBucket)
             .createSignedUrl(
                 movie.videoPath,
                 SIGNED_URL_TTL_SECONDS

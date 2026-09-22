@@ -58,10 +58,7 @@ const errorHandler = (err, req, res, next) => {
             statusCode = 404;
             message = "Record not found";
         }
-    }
 
-    // Handle Prisma foreign key constraint violations
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === "P2003") {
             statusCode = 400;
             message = "Invalid reference: related record does not exist";
