@@ -1,27 +1,38 @@
 import { prisma } from "../config/db.js";
+import { movieQuerySchema } from "../validators/movieValidators.js";
 
 // GET /movies
 const getMovies = async (req, res, next) => {
     try {
-        const { page = 1, limit = 10, search, genre } = req.query;
-        
+        const {
+            page,
+            limit,
+            search,
+            genre,
+        } = movieQuerySchema.parse(req.query);
+
         const skip = (page - 1) * limit;
         
         // Build filter
         const where = {};
         
         if (search) {
-            where.title = { contains: search, mode: "insensitive" };
+            where.title = { 
+                contains: search, 
+                mode: "insensitive" 
+            };
         }
         if (genre) {
-            where.genres = { has: genre };
+            where.genres = { 
+                has: genre 
+            };
         }
         
         const movies = await prisma.movie.findMany({
             where,
             orderBy: { createdAt: "desc" },
-            skip: parseInt(skip),
-            take: parseInt(limit),
+            skip,
+            take: limit,
         });
         
         // Get total count
@@ -32,8 +43,8 @@ const getMovies = async (req, res, next) => {
             data: {
                 movies,
                 pagination: {
-                    page: parseInt(page),
-                    limit: parseInt(limit),
+                    page,
+                    limit,
                     total,
                     pages: Math.ceil(total / limit),
                 },
