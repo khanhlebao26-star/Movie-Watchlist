@@ -5,3 +5,4 @@ Movie Watchlist/
 backend/videos/
 *.mp4
 test.js
+.env.example
