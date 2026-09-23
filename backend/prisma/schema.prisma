@@ -35,6 +35,7 @@ model Movie {
   title       String
   overview    String?
   releaseYear Int
+  tmdbId      Int?
   genres      String[] @default([])
   runtime     Int?
   posterUrl   String?
