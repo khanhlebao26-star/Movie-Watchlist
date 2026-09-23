@@ -157,7 +157,6 @@ DATABASE_URL=
 NODE_ENV=development
 
 JWT_SECRET=
-JWT_EXPIRES_IN=7d
 
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
@@ -344,7 +343,7 @@ PUT    /watchlist/:movieId
 DELETE /watchlist/:movieId
 
 GET    /api/watch-progress
-POST   /api/watch-progress/:movieId
+PUT   /api/watch-progress/:movieId
 
 GET    /api/videos/:movieId
 
