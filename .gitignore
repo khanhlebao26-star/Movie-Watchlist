@@ -1,8 +1,16 @@
 node_modules/
+
 .env
-/src/generated/prisma
+.env.*
+!.env.example
+
+/backend/src/generated/prisma/
+
 Movie Watchlist/
+
 backend/videos/
+
 *.mp4
+
 test.js
-.env.example
+

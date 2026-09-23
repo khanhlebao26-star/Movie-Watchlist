@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test --env-file=.env.test --test-concurrency=1",
     "dev": "nodemon src/server.js",
-    "seed:movies": "node prisma/seed.js"
+    "start": "node src/server.js",
+    "seed:movies": "node prisma/seed.js",
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
@@ -29,7 +31,9 @@
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.14",
-    "prisma": "^7.10.0"
+    "prisma": "^7.10.0",
+    "supertest": "^7.2.2"
   }
 }
