@@ -1725,6 +1725,20 @@ test("GET /movies/:id/cast returns movie cast", async () => {
             response.body.data.cast[0].character,
             "Character 1"
         );
+
+        // Kiểm tra tmdbId đã được lưu vào database
+        const savedMovie = await prisma.movie.findUnique({
+            where: { id: movie.id },
+        });
+
+        assert.equal(savedMovie.tmdbId, 12345);
+
+        // Kiểm tra Cache-Control header
+        assert.match(
+            response.headers["cache-control"],
+            /max-age=3600/
+        );
+
     } finally {
         fetchMock.mock.restore();
     }
@@ -1757,6 +1771,48 @@ test("GET /movies/:id/cast returns 404 when TMDB movie is not found", async () =
             response.body.message,
             "Movie not found on TMDB"
         );
+    } finally {
+        fetchMock.mock.restore();
+    }
+});
+
+test("GET /movies/:id/cast uses stored TMDB ID", async () => {
+    const movie = await createTestMovie();
+
+    await prisma.movie.update({
+        where: { id: movie.id },
+        data: { tmdbId: 12345 },
+    });
+
+    const fetchMock = mock.method(
+        global,
+        "fetch",
+        async (url) => {
+            assert.equal(
+                url,
+                "https://api.themoviedb.org/3/movie/12345/credits"
+            );
+
+            return new Response(
+                JSON.stringify({
+                    cast: [],
+                }),
+                {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+        }
+    );
+
+    try {
+        const response = await request(app)
+            .get(`/movies/${movie.id}/cast`);
+
+        assert.equal(response.status, 200);
+        assert.equal(fetchMock.mock.callCount(), 1);
     } finally {
         fetchMock.mock.restore();
     }
@@ -2081,6 +2137,12 @@ test("GET /trending/people returns trending people", async () => {
 
         assert.equal(response.status, 200);
         assert.equal(response.body.status, "success");
+
+        // Kiểm tra Cache-Control
+        assert.match(
+            response.headers["cache-control"],
+            /max-age=600/
+        );
 
         assert.deepEqual(
             response.body.data.people,

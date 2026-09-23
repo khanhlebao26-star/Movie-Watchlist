@@ -139,6 +139,15 @@ const updateMovie = async (req, res, next) => {
         if (posterUrl !== undefined) updateData.posterUrl = posterUrl;
         if (videoPath !== undefined) updateData.videoPath = videoPath;
             
+        // Nếu title hoặc releaseYear thay đổi,
+        // tmdbId cũ có thể không còn đúng.
+        const movieIdentityChanged =
+            (title !== undefined && title !== movie.title) ||
+            (releaseYear !== undefined && releaseYear !== movie.releaseYear);
+
+        if (movieIdentityChanged) {
+            updateData.tmdbId = null;
+        }
 
         const updatedMovie = await prisma.movie.update({
             where: { id: req.params.id },
@@ -208,35 +217,45 @@ const getMovieCast = async (req, res, next) => {
             Accept: "application/json",
         };
 
-        // 3. Tìm movie trên TMDB bằng title + năm
-        const searchUrl =
-            `https://api.themoviedb.org/3/search/movie` +
-            `?query=${encodeURIComponent(movie.title)}` +
-            `&year=${movie.releaseYear}`;
+        // 3. Ưu tiên tmdbId đã lưu trong database
+        let tmdbId = movie.tmdbId;
 
-        const searchResponse = await fetch(searchUrl, {
-            headers,
-        });
+        // 4. Nếu chưa có tmdbId thì tìm bằng title + releaseYear
+        if (!tmdbId) {
+            const searchUrl =
+                `https://api.themoviedb.org/3/search/movie` +
+                `?query=${encodeURIComponent(movie.title)}` +
+                `&year=${movie.releaseYear}`;
 
-        if (!searchResponse.ok) {
-            throw new Error("Failed to search movie on TMDB");
-        }
+            const searchResponse = await fetch(searchUrl, {
+                headers,
+            });
 
-        const searchData = await searchResponse.json();
+            if (!searchResponse.ok) {
+                throw new Error("Failed to search movie on TMDB");
+            }
 
-        if (!searchData.results?.length) {
-            return res.status(404).json({
-                status: "error",
-                message: "Movie not found on TMDB",
+            const searchData = await searchResponse.json();
+
+            if (!searchData.results?.length) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Movie not found on TMDB",
+                });
+            }
+
+            tmdbId = searchData.results[0].id;
+
+            // Lưu TMDB ID vào database
+            await prisma.movie.update({
+                where: { id: movie.id },
+                data: { tmdbId },
             });
         }
 
-        // 4. Lấy movie đầu tiên từ kết quả TMDB
-        const tmdbMovie = searchData.results[0];
-
-        // 5. Lấy cast
+        // 5. Lấy cast trực tiếp bằng tmdbId
         const creditsResponse = await fetch(
-            `https://api.themoviedb.org/3/movie/${tmdbMovie.id}/credits`,
+            `https://api.themoviedb.org/3/movie/${tmdbId}/credits`,
             {
                 headers,
             }
@@ -248,11 +267,17 @@ const getMovieCast = async (req, res, next) => {
 
         const creditsData = await creditsResponse.json();
 
-        // 6. Trả dữ liệu về frontend
+        // 6. Cache HTTP trong 1 giờ
+        res.setHeader(
+            "Cache-Control",
+            "public, max-age=3600"
+        );
+
+        // 7. Trả dữ liệu về frontend
         res.status(200).json({
             status: "success",
             data: {
-                tmdbMovieId: tmdbMovie.id,
+                tmdbMovieId: tmdbId,
                 cast: creditsData.cast.slice(0, 10),
             },
         });

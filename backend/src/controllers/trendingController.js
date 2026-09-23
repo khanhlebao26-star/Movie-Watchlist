@@ -43,6 +43,11 @@ export const getTrendingPeople = async (req, res, next) => {
                 popularity: person.popularity,
             }));
 
+        res.setHeader(
+            "Cache-Control",
+            "public, max-age=600"
+        );
+
         res.status(200).json({
             status: "success",
             data: {
