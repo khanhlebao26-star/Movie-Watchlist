@@ -11,6 +11,8 @@ export default function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -114,16 +116,34 @@ export default function Login() {
 
                             </div>
 
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={form.password}
-                                onChange={handleChange}
-                                placeholder="Enter your password"
-                                autoComplete="current-password"
-                                required
-                            />
+                            <div className="auth-password-field">
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    placeholder="Enter your password"
+                                    autoComplete="current-password"
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    className="auth-password-toggle"
+                                    onClick={() =>
+                                        setShowPassword((current) => !current)
+                                    }
+                                    aria-label={
+                                        showPassword 
+                                            ? "Hide password"
+                                            : "Show password"
+                                    }
+                                    aria-pressed={showPassword}
+                                >
+                                    {showPassword ? "Hide" : "Show"}
+                                </button>
+                            </div>
 
                         </div>
 

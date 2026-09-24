@@ -2,6 +2,13 @@ import "dotenv/config";
 
 const TMDB_URL = "https://api.themoviedb.org/3";
 
+const blockedPersonIds = new Set(
+    (process.env.BLOCKED_TMDB_PERSON_IDS || "")
+        .split(",")
+        .map(Number)
+        .filter(Number.isInteger)
+);
+
 export const getTrendingPeople = async (req, res, next) => {
     try {
         const token = process.env.TMDB_READ_ACCESS_TOKEN;
@@ -34,7 +41,16 @@ export const getTrendingPeople = async (req, res, next) => {
         }
 
         const people = data.results
+            // Chỉ chấp nhận person được TMDB xác định là không adult
+            .filter((person) => person.adult === false)
+            // Chỉ lấy những người có department là Acting
+            .filter((person) => person.known_for_department === "Acting")
+            // Loại những person nằm trong blocklist
+            .filter((person) => !blockedPersonIds.has(person.id))
+            // Phải có ảnh
             .filter((person) => person.profile_path)
+            // Chỉ lấy tối đa 12 người
+            .slice(0, 12)
             .map((person, index) => ({
                 id: person.id,
                 name: person.name,
