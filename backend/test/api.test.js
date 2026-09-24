@@ -2110,12 +2110,16 @@ test("GET /trending/people returns trending people", async () => {
                         {
                             id: 101,
                             name: "Person One",
+                            adult: false,
+                            known_for_department: "Acting",
                             profile_path: "/person1.jpg",
                             popularity: 99.5,
                         },
                         {
                             id: 102,
                             name: "Person Two",
+                            adult: false,
+                            known_for_department: "Acting",
                             profile_path: "/person2.jpg",
                             popularity: 88.2,
                         },
@@ -2181,12 +2185,16 @@ test("GET /trending/people filters people without profile image", async () => {
                         {
                             id: 201,
                             name: "Person With Image",
+                            adult: false,
+                            known_for_department: "Acting",
                             profile_path: "/person.jpg",
                             popularity: 70,
                         },
                         {
                             id: 202,
                             name: "Person Without Image",
+                            adult: false,
+                            known_for_department: "Acting",
                             profile_path: null,
                             popularity: 60,
                         },
@@ -2220,6 +2228,56 @@ test("GET /trending/people filters people without profile image", async () => {
                     popularity: 70,
                 },
             ]
+        );
+    } finally {
+        fetchMock.mock.restore();
+    }
+});
+
+test("GET /trending/people filters adult people", async () => {
+    const fetchMock = mock.method(
+        global,
+        "fetch",
+        async () =>
+            new Response(
+                JSON.stringify({
+                    results: [
+                        {
+                            id: 301,
+                            name: "Safe Actor",
+                            adult: false,
+                            known_for_department: "Acting",
+                            profile_path: "/safe.jpg",
+                            popularity: 80,
+                        },
+                        {
+                            id: 302,
+                            name: "Adult Actor",
+                            adult: true,
+                            known_for_department: "Acting",
+                            profile_path: "/adult.jpg",
+                            popularity: 90,
+                        },
+                    ],
+                }),
+                {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+    );
+
+    try {
+        const response = await request(app)
+            .get("/trending/people");
+
+        assert.equal(response.status, 200);
+        assert.equal(response.body.data.people.length, 1);
+        assert.equal(
+            response.body.data.people[0].id,
+            301
         );
     } finally {
         fetchMock.mock.restore();
