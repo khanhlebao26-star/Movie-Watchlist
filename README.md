@@ -210,10 +210,10 @@ npx prisma migrate dev
 
 ### Seed Data
 
-To seed movie data:
+To create or update the administrator account:
 
 ```bash
-npm run seed:movies
+npm run seed:admin
 ```
 
 ## Running the Application
@@ -244,13 +244,13 @@ Open the frontend URL in your browser.
 
 Run these commands from `backend/`:
 
-| Command                | Description                            |
-| ---------------------- | -------------------------------------- |
-| `npm run dev`          | Start backend with Nodemon             |
-| `npm start`            | Start backend                          |
-| `npm test`             | Run API test suite                     |
-| `npm run seed:movies`  | Seed movie data                        |
-| `npm run migrate:test` | Deploy migrations to the test database |
+| Command                | Description                                |
+| ---------------------- | ------------------------------------------ |
+| `npm run dev`          | Start backend with Nodemon                 |
+| `npm start`            | Start backend                              |
+| `npm test`             | Run API test suite                         |
+| `npm run seed:admin`   | Create or update the administrator account |
+| `npm run migrate:test` | Deploy migrations to the test database     |
 
 ## Frontend Scripts
 
@@ -339,8 +339,8 @@ DELETE /movies/:id
 
 GET    /watchlist
 POST   /watchlist
-PUT    /watchlist/:movieId
-DELETE /watchlist/:movieId
+PUT    /watchlist/:id
+DELETE /watchlist/:id
 
 GET    /api/watch-progress
 PUT   /api/watch-progress/:movieId

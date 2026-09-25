@@ -11,41 +11,55 @@ import videoRoutes from "./routes/videoRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import watchProgressRoutes from "./routes/watchProgressRoutes.js";
 
-import {
-    errorHandler,
-    notFound,
-} from "./middleware/errorMiddleware.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
+
+app.set("trust proxy", 1);
 
 app.use(helmet());
 
 const frontendUrl = process.env.FRONTEND_URL;
 
 if (!frontendUrl) {
-    throw new Error("FRONTEND_URL is required");
+  throw new Error("FRONTEND_URL is required");
 }
 
 app.use(
-    cors({
-        origin: frontendUrl,
-        credentials: true,
-    })
+  cors({
+    origin: frontendUrl,
+    credentials: true,
+  }),
 );
+
+const safeMethods = new Set(["GET", "HEAD", "OPTIONS"]);
+
+app.use((req, res, next) => {
+  const origin = req.get("origin");
+
+  if (!safeMethods.has(req.method) && origin && origin !== frontendUrl) {
+    return res.status(403).json({
+      status: "error",
+      message: "Origin not allowed",
+    });
+  }
+
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: Number(process.env.AUTH_RATE_LIMIT_MAX) || 20,
-    standardHeaders: "draft-8",
-    legacyHeaders: false,
-    message: {
-        status: "error",
-        message: "Too many attempts. Please try again later.",
-    },
+  windowMs: 15 * 60 * 1000,
+  limit: Number(process.env.AUTH_RATE_LIMIT_MAX) || 20,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: {
+    status: "error",
+    message: "Too many attempts. Please try again later.",
+  },
 });
 
 app.use("/auth/login", authLimiter);

@@ -127,6 +127,23 @@ test("POST /auth/register creates a USER account", async () => {
     assert.ok(response.headers["set-cookie"]);
 });
 
+test("POST requests reject an untrusted browser origin", async () => {
+    const response = await request(app)
+        .post("/auth/register")
+        .set("Origin", "https://evil.example")
+        .send({
+            name: "Blocked User",
+            email: `blocked-${randomUUID()}@example.com`,
+            password: "Password123!",
+        });
+
+    assert.equal(response.status, 403);
+    assert.deepEqual(response.body, {
+        status: "error",
+        message: "Origin not allowed",
+    });
+});
+
 test("POST /auth/register rejects duplicate email", async () => {
     const user = createTestUser();
 
@@ -2347,4 +2364,3 @@ after(async () => {
 
     await prisma.$disconnect();
 });
-
