@@ -7,7 +7,7 @@
     "test": "node --test --env-file=.env.test --test-concurrency=1",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "seed:movies": "node prisma/seed.js",
+    "seed:admin": "node prisma/seed.js",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy"
   },
   "keywords": [],
