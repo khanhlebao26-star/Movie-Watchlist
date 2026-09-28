@@ -60,7 +60,7 @@ In PowerShell, replace the placeholder and run:
 
 ```powershell
 New-Item -ItemType Directory -Force "D:\Backups\movie-watchlist"
-npx supabase@latest db dump --db-url "<SUPABASE_SESSION_POOLER_URL>" -f "D:\Backups\movie-watchlist\data.sql" --use-copy --data-only
+npx supabase@latest db dump --db-url "<SUPABASE_SESSION_POOLER_URL>" -f "D:\Backups\movie-watchlist\data.sql" --use-copy --data-only -x "public._prisma_migrations"
 ```
 
 Prisma migrations preserve the database structure. This data dump preserves
